@@ -45,6 +45,10 @@ At first I just made this code as a snippet and published it {on my blog}[http:/
 
 All it really does is to take the path and downcase it before dispatching. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
 
+== Feedback
+
+This is my first published gem, so bear with me, if I have missed some conventions. If you find anything wrong in documentation, code, dependencies, etc. please let me know at mailto:carsten@sarum.dk.
+
 == License
 
 MIT License. Copyright 2013 Carsten Gehling. http://gehling.dk
