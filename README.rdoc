@@ -4,6 +4,8 @@ Makes routing in Rails case-insensitive
 
 This gem hooks into the Rack middleware of Rails. This way all paths are downcased before dispatching to Rails' routing mechanism. Querystring parameters are not changed in any way.
 
+{<img src="https://travis-ci.org/carstengehling/route_downcaser.png" />}[https://travis-ci.org/carstengehling/route_downcaser]
+
 == Requirements
 
 This gem is only made to be used from Rails 3.0 and up. If you want this functionality in a Rails 2.x application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
