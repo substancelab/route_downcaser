@@ -1,6 +1,6 @@
 = RouteDowncaser
 
-Makes routing in Rails case-insensitive
+Makes routing in Rails case-insensitive (and other Rack-servers like Sinatra)
 
 This gem hooks into the Rack middleware of Rails. This way all paths are downcased before dispatching to Rails' routing mechanism. Querystring parameters are not changed in any way.
 
@@ -8,9 +8,13 @@ This gem hooks into the Rack middleware of Rails. This way all paths are downcas
 
 == Requirements
 
-This gem is only made to be used from Rails 3.0 and up. If you want this functionality in a Rails 2.x application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
+This gem has been tested with Rails 3.+ and Sinatra
+
+If you want this functionality in a Rails 2.x application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
 
 == Installing
+
+=== Rails
 
 Just add the gem to your gemfile and run bundle 
 
@@ -28,6 +32,29 @@ If you have a controller named app/controllers/foo_controller.rb and the action 
       http://localhost:3000/FOO/IndeX
 
 All the above are valid.
+
+=== Sinatra
+
+In your Gemfile you add the gem:
+
+      gem 'route_downcaser'
+
+In your application.rb you add the following (after loading Sinatra)
+
+      require 'route_downcaser'
+      use RouteDowncaser::DowncaseRouteMiddleware
+
+Now this statement
+
+      get '/foo' do
+        "Hello"
+      end
+
+will respond to all these requests:
+
+      http://localhost:4567/foo
+      http://localhost:4567/Foo
+      http://localhost:4567/FOO
 
 == Background information
 
