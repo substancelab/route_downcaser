@@ -11,7 +11,7 @@ module RouteDowncaser
         env['REQUEST_URI'] = uri_items.join('?')
       end
 
-      if env['PATH_INFO']
+      if env['PATH_INFO'] && !(env['PATH_INFO'] =~ /\/assets\//i)
         env['PATH_INFO'] = env['PATH_INFO'].downcase
       end
 
