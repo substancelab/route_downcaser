@@ -32,4 +32,12 @@ class RouteDowncaserTest < ActiveSupport::TestCase
 
     assert_equal("hello/world", app.env['PATH_INFO'])
   end
+
+  test "asset filenames are not touched" do
+    app = MockApp.new
+    env = { 'PATH_INFO' => "ASSETS/IMAges/SpaceCat.jpeg" }
+    RouteDowncaser::DowncaseRouteMiddleware.new(app).call(env)
+
+    assert_equal("assets/images/SpaceCat.jpeg", app.env['PATH_INFO'])
+  end
 end
