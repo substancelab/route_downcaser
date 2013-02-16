@@ -74,6 +74,24 @@ At first I just made this code as a snippet and published it {on my blog}[http:/
 
 All it really does is to take the path and downcase it before dispatching. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
 
+== Changelog
+
+=== 0.2.0
+
+Asset urls are now ignored - important since filesystems may be case sensitive. Thanks goes to {Casey Pugh}[https://github.com/caseypugh]
+
+=== 0.1.2
+
+Removed silly dependencies (sqlite3, etc.)
+
+=== 0.1.1
+
+Added documentation README
+
+=== 0.1.0
+
+First version of gem
+
 == Feedback
 
 This is my first published gem, so bear with me, if I have missed some conventions. If you find anything wrong in documentation, code, dependencies, etc. please let me know at mailto:carsten@sarum.dk.
