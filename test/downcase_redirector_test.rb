@@ -8,11 +8,11 @@ class MockApp
   end
 end
 
-class RouteDowncaserTest < ActiveSupport::TestCase
+class DowncaseRedirectorTest < ActiveSupport::TestCase
   test "REQUEST_URI path-part is downcased" do
     app = MockApp.new
     env = { 'REQUEST_URI' => "HELLO/WORLD" }
-    RouteDowncaser::DowncaseRouteMiddleware.new(app).call(env)
+    DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
 
     assert_equal("hello/world", app.env['REQUEST_URI'])
   end
@@ -20,7 +20,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
   test "REQUEST_URI querystring parameters are not touched" do
     app = MockApp.new
     env = { 'REQUEST_URI' => "HELLO/WORLD?FOO=BAR" }
-    RouteDowncaser::DowncaseRouteMiddleware.new(app).call(env)
+    DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
 
     assert_equal("hello/world?FOO=BAR", app.env['REQUEST_URI'])
   end
@@ -28,7 +28,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
   test "entire PATH_INFO is downcased" do
     app = MockApp.new
     env = { 'PATH_INFO' => "HELLO/WORLD" }
-    RouteDowncaser::DowncaseRouteMiddleware.new(app).call(env)
+    DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
 
     assert_equal("hello/world", app.env['PATH_INFO'])
   end
@@ -36,7 +36,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
   test "asset filenames are not touched" do
     app = MockApp.new
     env = { 'PATH_INFO' => "ASSETS/IMAges/SpaceCat.jpeg" }
-    RouteDowncaser::DowncaseRouteMiddleware.new(app).call(env)
+    DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
 
     assert_equal("assets/images/SpaceCat.jpeg", app.env['PATH_INFO'])
   end

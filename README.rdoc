@@ -1,10 +1,8 @@
-= RouteDowncaser
+= DowncaseRedirector
 
 Makes routing in Rails case-insensitive (and other Rack-servers like Sinatra)
 
 This gem hooks into the Rack middleware of Rails. This way all paths are downcased before dispatching to Rails' routing mechanism. Querystring parameters are not changed in any way.
-
-{<img src="https://travis-ci.org/carstengehling/route_downcaser.png" />}[https://travis-ci.org/carstengehling/route_downcaser]
 
 == Requirements
 
@@ -18,31 +16,32 @@ If you want this functionality in a Rails 2.x application, please refer to {this
 
 Just add the gem to your gemfile and run bundle 
 
-      gem 'route_downcaser'
+      gem 'downcase_redirector'
 
 Then restart your Rails server. No configuration is needed. The gem simply hooks itself into the Rack middleware call stack.
 
 If you have a controller named app/controllers/foo_controller.rb and the action index, you can now call it with:
 
-      http://localhost:3000/foo
       http://localhost:3000/Foo
       http://localhost:3000/FOO
       http://localhost:3000/foo/index
       http://localhost:3000/Foo/INDEX
       http://localhost:3000/FOO/IndeX
 
-All the above are valid.
+All the above will be 301 redirected to .
+
+      http://localhost:3000/foo
 
 === Sinatra
 
 In your Gemfile you add the gem:
 
-      gem 'route_downcaser'
+      gem 'downcase_redirector'
 
 In your application.rb you add the following (after loading Sinatra)
 
-      require 'route_downcaser'
-      use RouteDowncaser::DowncaseRouteMiddleware
+      require 'downcase_redirector'
+      use DowncaseRedirector::DowncaseRedirectorMiddleware
 
 Now this statement
 
@@ -50,17 +49,15 @@ Now this statement
         "Hello"
       end
 
-will respond to all these requests:
+will 301 redirect all these requests:
 
-      http://localhost:4567/foo
+
       http://localhost:4567/Foo
       http://localhost:4567/FOO
 
-== Optionally redirect requests to downcased URI
+to:
 
-To configure the gem so that the request is redirected to the downcased path, for SEO purposes for example, set the redirect flag in an initializer (Rails) or in application.rb (Sinatra).
-
-      RouteDowncaser.redirect = true
+      http://localhost:4567/foo
 
 == Background information
 
@@ -82,26 +79,10 @@ All it really does is to take the path and downcase it before dispatching. Query
 
 == Changelog
 
-=== 0.2.0
+=== 0.3.0
 
-Asset urls are now ignored - important since filesystems may be case sensitive. Thanks goes to {Casey Pugh}[https://github.com/caseypugh]
-
-=== 0.1.2
-
-Removed silly dependencies (sqlite3, etc.)
-
-=== 0.1.1
-
-Added documentation README
-
-=== 0.1.0
-
-First version of gem
-
-== Feedback
-
-This is my first published gem, so bear with me, if I have missed some conventions. If you find anything wrong in documentation, code, dependencies, etc. please let me know at mailto:carsten@sarum.dk.
+Forked from route_downcaser and modified to redirect.
 
 == License
 
-MIT License. Copyright 2013 Carsten Gehling. http://gehling.dk
+MIT License. Original route_downcaser gem is copyright 2013 Carsten Gehling. http://gehling.dk

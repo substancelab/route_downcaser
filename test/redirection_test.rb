@@ -12,9 +12,30 @@ class RedirectionTest < ActiveSupport::TestCase
   test "Redirected to REQUEST_URI" do
     app = MockApp.new
     env = { 'REQUEST_URI' => "HELLO/WORLD" }
-    RouteDowncaser.redirect = true
-    rack_response = RouteDowncaser::DowncaseRouteMiddleware.new(app).call(env)
-    assert_equal(rack_response, [301, {"Location" => "hello/world"}, []])
-    RouteDowncaser.redirect = false # reset the flag for later tests
+    DowncaseRedirector.redirect = true
+    rack_response = DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
+    assert_equal(rack_response, [301, {"Location" => "hello/world", 'Content-Type' => 'text/html'}, []])
+    DowncaseRedirector.redirect = false # reset the flag for later tests
   end
+
+  test "A nil REQUEST_URI should not cause an error" do
+    app = MockApp.new
+    env = { 'REQUEST_URI' => nil }
+    DowncaseRedirector.redirect = true
+    DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
+    # if we get this far, no relevant error was raised
+    assert_nil(env['REQUEST_URI'])
+    DowncaseRedirector.redirect = false # reset the flag for later tests
+  end
+
+  test "asset filenames are not touched" do
+    app = MockApp.new
+    env = { 'PATH_INFO' => "ASSETS/IMAges/SpaceCat.jpeg" }
+    DowncaseRedirector.redirect = true
+    DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
+
+    assert_equal("assets/images/SpaceCat.jpeg", app.env['REQUEST_URI'])
+    DowncaseRedirector.redirect = false
+  end
+
 end

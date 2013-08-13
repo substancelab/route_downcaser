@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :route_downcaser do
+# task :downcase_redirector do
 #   # Task goes here
 # end
