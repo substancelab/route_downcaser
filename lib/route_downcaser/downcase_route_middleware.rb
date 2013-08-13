@@ -18,7 +18,11 @@ module RouteDowncaser
         env['PATH_INFO'] = env['PATH_INFO'].downcase
       end
 
-      @app.call(env)
+      if RouteDowncaser.redirect
+        [301, {"Location" => env['REQUEST_URI']}, []]
+      else
+        @app.call(env)
+      end
     end
   end
 end

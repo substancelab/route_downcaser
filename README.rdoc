@@ -56,6 +56,12 @@ will respond to all these requests:
       http://localhost:4567/Foo
       http://localhost:4567/FOO
 
+== Optionally redirect requests to downcased URI
+
+To configure the gem so that the request is redirected to the downcased path, for SEO purposes for example, set the redirect flag in an initializer (Rails) or in application.rb (Sinatra).
+
+      RouteDowncaser.redirect = true
+
 == Background information
 
 Sometimes you may wish to market a url which contains a controller name - like www.myshop.com/specialoffer. If this is done on offline media it will cause potential customers trouble, if they don't use the correct casing. If, for some reason, the user types www.myshop.com/Specialoffer (with capital S), your Rails app will return a 404 not found.
