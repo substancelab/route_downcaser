@@ -1,14 +1,12 @@
 = DowncaseRedirector
 
-Makes routing in Rails case-insensitive (and other Rack-servers like Sinatra)
+Case-insensitive 301 redirects to downcased URIs.
 
 This gem hooks into the Rack middleware of Rails. This way all paths are downcased before dispatching to Rails' routing mechanism. Querystring parameters are not changed in any way.
 
 == Requirements
 
-This gem has been tested with Rails 3.+ and Sinatra
-
-If you want this functionality in a Rails 2.x application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
+This gem has been tested with Rails 3.+
 
 == Installing
 
@@ -32,32 +30,6 @@ All the above will be 301 redirected to .
 
       http://localhost:3000/foo
 
-=== Sinatra
-
-In your Gemfile you add the gem:
-
-      gem 'downcase_redirector'
-
-In your application.rb you add the following (after loading Sinatra)
-
-      require 'downcase_redirector'
-      use DowncaseRedirector::DowncaseRedirectorMiddleware
-
-Now this statement
-
-      get '/foo' do
-        "Hello"
-      end
-
-will 301 redirect all these requests:
-
-
-      http://localhost:4567/Foo
-      http://localhost:4567/FOO
-
-to:
-
-      http://localhost:4567/foo
 
 == Background information
 
@@ -71,11 +43,7 @@ So www.myshop.com is case-insensitive and can be written as WWW.MYSHOP.COM, but 
 
 It may make perfect sense for the W3C guys, but not for the average user.
 
-When Rails introduced Rack middleware, it suddenly became possible to hook into the call-stack before the URL is used for action dispatching.
-
-At first I just made this code as a snippet and published it {on my blog}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive]. But since I found out that many people are actually using this, I finally decided to convert it into a gem.
-
-All it really does is to take the path and downcase it before dispatching. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
+All it really does is to take the path and redirect to a downcased version. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
 
 == Changelog
 

@@ -6,7 +6,7 @@ require "downcase_redirector/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "downcase_redirector"
-  s.version     = RouteDowncaser::VERSION
+  s.version     = DowncaseRedirector::VERSION
   s.authors     = ["FoodyDirect", "Carsten Gehling"]
   s.email       = ["alex@foodydirect.com", "carsten@sarum.dk"]
   s.homepage    = "https://github.com/foody_direct/downcase_redirector"
