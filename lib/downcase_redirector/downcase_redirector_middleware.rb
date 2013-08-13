@@ -28,10 +28,8 @@ module DowncaseRedirector
       end
 
       if changed && env['REQUEST_URI'] && (!asset)
-        puts "DowncaseRedirectorMiddleware redirecting to #{env['REQUEST_URI']}"
         [301, {'Location' => env['REQUEST_URI'], 'Content-Type' => 'text/html'}, []]
       else
-        puts "No DowncaseRedirectorMiddleware redirection"
         @app.call(env)
       end
     end
