@@ -14,7 +14,7 @@ class DowncaseRedirectorTest < ActiveSupport::TestCase
     env = { 'REQUEST_URI' => "HELLO/WORLD" }
     DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
 
-    assert_equal("hello/world", app.env['REQUEST_URI'])
+    assert_equal("hello/world", env['REQUEST_URI'])
   end
 
   test "REQUEST_URI querystring parameters are not touched" do
@@ -22,7 +22,7 @@ class DowncaseRedirectorTest < ActiveSupport::TestCase
     env = { 'REQUEST_URI' => "HELLO/WORLD?FOO=BAR" }
     DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
 
-    assert_equal("hello/world?FOO=BAR", app.env['REQUEST_URI'])
+    assert_equal("hello/world?FOO=BAR", env['REQUEST_URI'])
   end
 
   test "entire PATH_INFO is downcased" do
@@ -30,14 +30,13 @@ class DowncaseRedirectorTest < ActiveSupport::TestCase
     env = { 'PATH_INFO' => "HELLO/WORLD" }
     DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
 
-    assert_equal("hello/world", app.env['PATH_INFO'])
+    assert_equal("hello/world", env['PATH_INFO'])
   end
 
   test "asset filenames are not touched" do
     app = MockApp.new
-    env = { 'PATH_INFO' => "ASSETS/IMAges/SpaceCat.jpeg" }
+    env = { 'PATH_INFO' => "/ASSETS/IMAges/SpaceCat.jpeg" }
     DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
-
-    assert_equal("assets/images/SpaceCat.jpeg", app.env['PATH_INFO'])
+    assert_equal("/assets/images/SpaceCat.jpeg", env['PATH_INFO'])
   end
 end

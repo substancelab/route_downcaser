@@ -1,3 +1,4 @@
 module DowncaseRedirector
-  VERSION = "0.2.9.17"
+  # Just continuing the version number from route_downcaser
+  VERSION = "0.3.0"
 end

@@ -30,11 +30,13 @@ class RedirectionTest < ActiveSupport::TestCase
 
   test "asset filenames are not touched" do
     app = MockApp.new
-    env = { 'PATH_INFO' => "ASSETS/IMAges/SpaceCat.jpeg" }
+    env = { 'PATH_INFO' => "/ASSETS/IMAges/SpaceCat.jpeg" }
+    puts env
     DowncaseRedirector.redirect = true
     DowncaseRedirector::DowncaseRedirectorMiddleware.new(app).call(env)
+    puts env
 
-    assert_equal("assets/images/SpaceCat.jpeg", app.env['REQUEST_URI'])
+    assert_equal("/assets/images/SpaceCat.jpeg", env['PATH_INFO'])
     DowncaseRedirector.redirect = false
   end
 
