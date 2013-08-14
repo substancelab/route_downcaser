@@ -1,16 +1,12 @@
-= RouteDowncaser
+= DowncaseRedirector
 
-Makes routing in Rails case-insensitive (and other Rack-servers like Sinatra)
+Case-insensitive 301 redirects to downcased URIs.
 
 This gem hooks into the Rack middleware of Rails. This way all paths are downcased before dispatching to Rails' routing mechanism. Querystring parameters are not changed in any way.
 
-{<img src="https://travis-ci.org/carstengehling/route_downcaser.png" />}[https://travis-ci.org/carstengehling/route_downcaser]
-
 == Requirements
 
-This gem has been tested with Rails 3.+ and Sinatra
-
-If you want this functionality in a Rails 2.x application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
+This gem has been tested with Rails 3.+
 
 == Installing
 
@@ -18,43 +14,22 @@ If you want this functionality in a Rails 2.x application, please refer to {this
 
 Just add the gem to your gemfile and run bundle 
 
-      gem 'route_downcaser'
+      gem 'downcase_redirector'
 
 Then restart your Rails server. No configuration is needed. The gem simply hooks itself into the Rack middleware call stack.
 
 If you have a controller named app/controllers/foo_controller.rb and the action index, you can now call it with:
 
-      http://localhost:3000/foo
       http://localhost:3000/Foo
       http://localhost:3000/FOO
       http://localhost:3000/foo/index
       http://localhost:3000/Foo/INDEX
       http://localhost:3000/FOO/IndeX
 
-All the above are valid.
+All the above will be 301 redirected to .
 
-=== Sinatra
+      http://localhost:3000/foo
 
-In your Gemfile you add the gem:
-
-      gem 'route_downcaser'
-
-In your application.rb you add the following (after loading Sinatra)
-
-      require 'route_downcaser'
-      use RouteDowncaser::DowncaseRouteMiddleware
-
-Now this statement
-
-      get '/foo' do
-        "Hello"
-      end
-
-will respond to all these requests:
-
-      http://localhost:4567/foo
-      http://localhost:4567/Foo
-      http://localhost:4567/FOO
 
 == Background information
 
@@ -68,34 +43,14 @@ So www.myshop.com is case-insensitive and can be written as WWW.MYSHOP.COM, but 
 
 It may make perfect sense for the W3C guys, but not for the average user.
 
-When Rails introduced Rack middleware, it suddenly became possible to hook into the call-stack before the URL is used for action dispatching.
-
-At first I just made this code as a snippet and published it {on my blog}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive]. But since I found out that many people are actually using this, I finally decided to convert it into a gem.
-
-All it really does is to take the path and downcase it before dispatching. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
+All it really does is to take the path and redirect to a downcased version. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
 
 == Changelog
 
-=== 0.2.0
+=== 0.3.0
 
-Asset urls are now ignored - important since filesystems may be case sensitive. Thanks goes to {Casey Pugh}[https://github.com/caseypugh]
-
-=== 0.1.2
-
-Removed silly dependencies (sqlite3, etc.)
-
-=== 0.1.1
-
-Added documentation README
-
-=== 0.1.0
-
-First version of gem
-
-== Feedback
-
-This is my first published gem, so bear with me, if I have missed some conventions. If you find anything wrong in documentation, code, dependencies, etc. please let me know at mailto:carsten@sarum.dk.
+Forked from route_downcaser and modified to redirect.
 
 == License
 
-MIT License. Copyright 2013 Carsten Gehling. http://gehling.dk
+MIT License. Original route_downcaser gem is copyright 2013 Carsten Gehling. http://gehling.dk

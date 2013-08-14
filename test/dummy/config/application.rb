@@ -9,7 +9,7 @@ require "sprockets/railtie"
 # Auto-require default libraries and those for the current Rails environment. 
 Bundler.require :default, Rails.env
 
-require "route_downcaser"
+require "downcase_redirector"
 
 module Dummy
   class Application < Rails::Application
