@@ -40,4 +40,24 @@ class RouteDowncaserTest < ActiveSupport::TestCase
 
     assert_equal("assets/images/SpaceCat.jpeg", app.env['PATH_INFO'])
   end
+
+  test "urls can be left alone by configuration" do
+    app = MockApp.new
+    env = { 'PATH_INFO' => "password_resets/aBcDeF/edit" }
+
+    ignore = /^password_resets/
+    RouteDowncaser::DowncaseRouteMiddleware.new(app, :ignore => ignore).call(env)
+
+    assert_equal("password_resets/aBcDeF/edit", app.env['PATH_INFO'])
+  end
+
+  test "path is still downcased if ignore does not match" do
+    app = MockApp.new
+    env = { 'PATH_INFO' => "HELLO/WORLD" }
+
+    ignore = /^password_resets/
+    RouteDowncaser::DowncaseRouteMiddleware.new(app, :ignore => ignore).call(env)
+
+    assert_equal("hello/world", app.env['PATH_INFO'])
+  end
 end
