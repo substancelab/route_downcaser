@@ -16,11 +16,13 @@ If you want this functionality in a Rails 2.x application, please refer to {this
 
 === Rails
 
-Just add the gem to your gemfile and run bundle 
+Just add the gem to your gemfile and run bundle
 
       gem 'route_downcaser'
 
-Then restart your Rails server. No configuration is needed. The gem simply hooks itself into the Rack middleware call stack.
+Then use the middleware where appripriate (probably config/application.rb)
+
+      config.middleware.use "RouteDowncaser::DowncaseRouteMiddleware"
 
 If you have a controller named app/controllers/foo_controller.rb and the action index, you can now call it with:
 
@@ -55,6 +57,15 @@ will respond to all these requests:
       http://localhost:4567/foo
       http://localhost:4567/Foo
       http://localhost:4567/FOO
+
+== Configuration
+
+If you would like RouteDowncaser to ignore certain urls entirely, you can provide the :ignore option.
+
+Example:
+
+      # Ignore Devise password reset urls
+      config.middleware.use "RouteDowncaser::DowncaseRouteMiddleware", ignore: /password_resets/
 
 == Background information
 
