@@ -8,7 +8,7 @@ This gem hooks into the Rack middleware of Rails. This way all paths are downcas
 
 == Requirements
 
-This gem has been tested with Rails 3.+ and Sinatra
+This gem has been tested with Rails 3.+, Rails 4.0, and Sinatra
 
 If you want this functionality in a Rails 2.x application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
 
@@ -75,6 +75,10 @@ At first I just made this code as a snippet and published it {on my blog}[http:/
 All it really does is to take the path and downcase it before dispatching. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
 
 == Changelog
+
+=== 0.2.1
+
+The gem has now been tested to work with Rails 4.0 (it mostly involved changes in the test dummy-app because of deprecations between Rails 3.2 and 4.0)
 
 === 0.2.0
 

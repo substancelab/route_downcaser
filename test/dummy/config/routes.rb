@@ -1,5 +1,5 @@
 Dummy::Application.routes.draw do
-  match "hello/world"
+  get "hello/world"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
