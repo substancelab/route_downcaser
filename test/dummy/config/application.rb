@@ -5,7 +5,7 @@ require "action_mailer/railtie"
 require "rails/test_unit/railtie"
 require "sprockets/railtie"
 
-# Auto-require default libraries and those for the current Rails environment. 
+# Auto-require default libraries and those for the current Rails environment.
 Bundler.require :default, Rails.env
 
 require "route_downcaser"
@@ -59,6 +59,8 @@ module Dummy
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.middleware.use "RouteDowncaser::DowncaseRouteMiddleware"
   end
 end
 
