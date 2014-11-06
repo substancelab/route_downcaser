@@ -11,11 +11,10 @@ module RouteDowncaser
         env['REQUEST_URI'] = uri_items.join('?')
       end
 
-      if env['PATH_INFO'] =~ /assets\//i
-        pieces = env['PATH_INFO'].split('/')
-        env['PATH_INFO'] = pieces.slice(0..-2).join('/').downcase + '/' + pieces.last
-      elsif env['PATH_INFO']
-        env['PATH_INFO'] = env['PATH_INFO'].downcase
+      unless env['PATH_INFO'] =~ /assets|reset-password\//i
+        if env['PATH_INFO']
+          env['PATH_INFO'] = env['PATH_INFO'].downcase
+        end
       end
 
       @app.call(env)
