@@ -40,4 +40,17 @@ class RouteDowncaserTest < ActiveSupport::TestCase
 
     assert_equal("assets/images/SpaceCat.jpeg", app.env['PATH_INFO'])
   end
+
+  test "when redirect is set to true it redirects" do
+    app = MockApp.new
+    env = { 'REQUEST_URI' => "HELLO/WORLD" }
+    RouteDowncaser.configuration do |config|
+      config.redirect = true
+    end
+
+    assert_equal(
+      RouteDowncaser::DowncaseRouteMiddleware.new(app).call(env),
+      [301, {'Location' => "hello/world", 'Content-Type' => 'text/html'}, []]
+    )
+  end
 end

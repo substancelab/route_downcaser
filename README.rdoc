@@ -16,7 +16,7 @@ If you want this functionality in a Rails 2.x application, please refer to {this
 
 === Rails
 
-Just add the gem to your gemfile and run bundle 
+Just add the gem to your gemfile and run bundle
 
       gem 'route_downcaser'
 
@@ -73,6 +73,20 @@ When Rails introduced Rack middleware, it suddenly became possible to hook into 
 At first I just made this code as a snippet and published it {on my blog}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive]. But since I found out that many people are actually using this, I finally decided to convert it into a gem.
 
 All it really does is to take the path and downcase it before dispatching. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
+
+== Configuration Options
+
+Configuration options can be set using an initializer in your application like so:
+
+      # config/initializers/route_downcaser.rb
+
+      RouteDowncaser.configuration do |config|
+        config.redirect = true
+      end
+
+=== Redirect
+
+With this configuration option set to `true`, the middleware will 301 redirect all routes to their downcased version. Example: `http://localhost:3000/Foo` will redirect to `http://localhost:3000/foo`.
 
 == Changelog
 
