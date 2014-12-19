@@ -90,6 +90,10 @@ With this configuration option set to `true`, the middleware will 301 redirect a
 
 == Changelog
 
+=== 0.2.2
+
+Redirection is now possible as a configurable option. Thanks goes to {Mike Ackerman}[https://github.com/mackermedia]
+
 === 0.2.1
 
 The gem has now been tested to work with Rails 4.0 (it mostly involved changes in the test dummy-app because of deprecations between Rails 3.2 and 4.0)
