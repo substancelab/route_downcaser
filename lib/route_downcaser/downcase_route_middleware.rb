@@ -5,10 +5,16 @@ module RouteDowncaser
     end
 
     def call(env)
+      @env = env
+
       if env['REQUEST_URI']
-        uri_items = env['REQUEST_URI'].split('?')
-        uri_items[0].downcase!
-        env['REQUEST_URI'] = uri_items.join('?')
+        if RouteDowncaser.redirect == true
+          if path != path.downcase
+            return [301, {'Location' => downcased_uri, 'Content-Type' => 'text/html'}, []]
+          end
+        else
+          env['REQUEST_URI'] = downcased_uri
+        end
       end
 
       if env['PATH_INFO'] =~ /assets\//i
@@ -19,6 +25,28 @@ module RouteDowncaser
       end
 
       @app.call(env)
+    end
+
+    private
+
+    def uri_items
+      @env['REQUEST_URI'].split('?')
+    end
+
+    def path
+      uri_items[0]
+    end
+
+    def query?
+      uri_items.length > 1
+    end
+
+    def downcased_uri
+      if query?
+        "#{path.downcase!}?#{uri_items[1]}"
+      else
+        path.downcase!
+      end
     end
   end
 end
