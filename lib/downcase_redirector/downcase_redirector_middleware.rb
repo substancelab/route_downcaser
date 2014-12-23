@@ -1,10 +1,31 @@
+require 'downcase_redirector/configuration'
+
 module DowncaseRedirector
   class DowncaseRedirectorMiddleware
+
+    attr_accessor :configuration
+
+    def self.configuration
+      @configuration ||= Configuration.new
+    end
+
+    def self.configure
+      yield(configuration)
+    end
+
     def initialize(app)
       @app = app
     end
 
     def call(env)
+      self.class.configuration.exclude_list.each do |exclude_regex|
+        if env['REQUEST_URI']
+          if env['REQUEST_URI'] =~ exclude_regex
+            return @app.call(env)
+          end
+        end
+      end
+
       if env['REQUEST_URI']
         uri_items = env['REQUEST_URI'].split('?')
         original_first_uri_item = String.new(uri_items[0])
