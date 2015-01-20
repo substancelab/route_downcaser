@@ -8,7 +8,7 @@ module RouteDowncaser
       @env = env
 
       if env['REQUEST_URI']
-        if RouteDowncaser.redirect == true
+        if RouteDowncaser.redirect == true && !exclude_patterns_match?(env['REQUEST_URI'])
           if path != path.downcase
             return [301, {'Location' => downcased_uri, 'Content-Type' => 'text/html'}, []]
           end
@@ -17,7 +17,7 @@ module RouteDowncaser
         end
       end
 
-      if env['PATH_INFO'] =~ /assets\//i
+      if exclude_patterns_match?(env['PATH_INFO'])
         pieces = env['PATH_INFO'].split('/')
         env['PATH_INFO'] = pieces.slice(0..-2).join('/').downcase + '/' + pieces.last
       elsif env['PATH_INFO']
@@ -47,6 +47,10 @@ module RouteDowncaser
       else
         path.downcase!
       end
+    end
+
+    def exclude_patterns_match?(uri)
+      uri.match(Regexp.union(RouteDowncaser.exclude_patterns)) if uri
     end
   end
 end

@@ -41,16 +41,30 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     assert_equal("assets/images/SpaceCat.jpeg", app.env['PATH_INFO'])
   end
 
-  test "when redirect is set to true it redirects" do
-    app = MockApp.new
-    env = { 'REQUEST_URI' => "HELLO/WORLD" }
-    RouteDowncaser.configuration do |config|
-      config.redirect = true
+  class RedirectTrueTests < ActiveSupport::TestCase
+    setup do
+      @app = MockApp.new
+      RouteDowncaser.configuration do |config|
+        config.redirect = true
+        config.exclude_patterns = [/assets\//i, /fonts\//i]
+      end
     end
 
-    assert_equal(
-      RouteDowncaser::DowncaseRouteMiddleware.new(app).call(env),
-      [301, {'Location' => "hello/world", 'Content-Type' => 'text/html'}, []]
-    )
+    test "when redirect is true it redirects paths that do not contain matching exclude patterns" do
+      env = { 'REQUEST_URI' => "HELLO/WORLD" }
+
+      assert_equal(
+        RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(env),
+        [301, {'Location' => "hello/world", 'Content-Type' => 'text/html'}, []]
+      )
+    end
+
+    test "when redirect is true it does not redirect matching exclude patterns" do
+      env = { 'REQUEST_URI' => "fonts/Icons.woff", 'PATH_INFO' => "fonts/Icons.woff" }
+
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(env)
+
+      assert_equal("fonts/Icons.woff", @app.env['PATH_INFO'])
+    end
   end
 end
