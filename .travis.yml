@@ -5,17 +5,17 @@ rvm:
   - "2.2.0"
 env:
   - "RAILS_VERSION=3.1.12"
-  - "RAILS_VERSION=3.2.14"
-  - "RAILS_VERSION=4.0.0"
+  - "RAILS_VERSION=3.2.21"
+  - "RAILS_VERSION=4.0.13"
   - "RAILS_VERSION=4.1.9"
   - "RAILS_VERSION=4.2.0"
 
 matrix:
   exclude:
     - rvm: "1.9.3"
-      env: "RAILS_VERSION=4.0.0"
+      env: "RAILS_VERSION=4.0.13"
     - rvm: "1.9.3"
-      env: "RAILS_VERSION=4.1.0"
+      env: "RAILS_VERSION=4.1.9"
     - rvm: "1.9.3"
       env: "RAILS_VERSION=4.2.0"
 
@@ -27,7 +27,7 @@ matrix:
     - rvm: "2.2.0"
       env: "RAILS_VERSION=3.1.12"
     - rvm: "2.2.0"
-      env: "RAILS_VERSION=3.2.14"
+      env: "RAILS_VERSION=3.2.21"
 
 addons:
   code_climate:
