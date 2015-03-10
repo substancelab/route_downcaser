@@ -100,7 +100,7 @@ All it really does is to take the path and downcase it before dispatching. Query
 
 == Changelog
 
-=== 1.0.0
+=== 1.0.1
 
 Refactored parts of the code to work with Rails 4.2.0
 
