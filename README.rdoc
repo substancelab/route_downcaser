@@ -100,11 +100,11 @@ All it really does is to take the path and downcase it before dispatching. Query
 
 == Changelog
 
-=== 0.2.3
-
-New config for ignoring/excluding paths
+=== 1.0.0
 
 Refactored parts of the code to work with Rails 4.2.0
+
+New config for ignoring/excluding paths
 
 === 0.2.2
 
