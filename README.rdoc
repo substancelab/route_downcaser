@@ -8,9 +8,9 @@ This gem hooks into the Rack middleware of Rails. This way all paths are downcas
 
 == Requirements
 
-This gem has been tested with Rails 3.+, Rails 4.0, and Sinatra
+This gem has been tested with Rails 3.1, Rails 4.0, Rails 4.1 and Sinatra
 
-If you want this functionality in a Rails 2.x application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
+If you want this functionality in a Rails 2.x-3.0 application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
 
 == Installing
 
