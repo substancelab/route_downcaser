@@ -15,3 +15,5 @@ else
 end
 gem "rails", rails
 ###############################################
+
+gem "codeclimate-test-reporter", group: :test, require: nil
