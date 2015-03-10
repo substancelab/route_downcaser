@@ -11,6 +11,23 @@ env:
   - "RAILS_VERSION=4.1.9"
   - "RAILS_VERSION=4.2.0"
 
+matrix:
+  exclude:
+    - rvm: "1.9.3"
+      env: "RAILS_VERSION=4.0.0"
+    - rvm: "1.9.3"
+      env: "RAILS_VERSION=4.1.0"
+    - rvm: "1.9.3"
+      env: "RAILS_VERSION=4.2.0"
+    - rvm: "2.1.4"
+      env: "RAILS_VERSION=3.1.12"
+    - rvm: "2.1.4"
+      env: "RAILS_VERSION=3.2.14"
+    - rvm: "2.2.0"
+      env: "RAILS_VERSION=3.1.12"
+    - rvm: "2.2.0"
+      env: "RAILS_VERSION=3.2.14"
+
 addons:
   code_climate:
     repo_token: 970a221275a9af67dcd65c19f074b8f5e94581c97ab883ad6a974dd4b425b3bc
