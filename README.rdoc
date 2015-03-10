@@ -82,13 +82,29 @@ Configuration options can be set using an initializer in your application like s
 
       RouteDowncaser.configuration do |config|
         config.redirect = true
+
+        config.exclude_patterns = [
+          /assets\//i,
+          /fonts\//i,
+          /some\/important\/path/i
+        ]
       end
 
-=== Redirect
+=== redirect
 
 With this configuration option set to `true`, the middleware will 301 redirect all routes to their downcased version. Example: `http://localhost:3000/Foo` will redirect to `http://localhost:3000/foo`.
 
+=== exclude_patterns
+
+Array of regular expressions. If the requested path matches one of these expressions, RouteDowncaser will not change anything.
+
 == Changelog
+
+=== 0.2.3
+
+New config for ignoring/excluding paths
+
+Refactored parts of the code to work with Rails 4.2.0
 
 === 0.2.2
 

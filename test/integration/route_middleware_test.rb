@@ -6,7 +6,7 @@ class RouteMiddlewareTest < ActionDispatch::IntegrationTest
       config.redirect = false
     end
 
-    get "HELLO/WORLD"
+    get "/HELLO/WORLD"
     assert_response :success
     assert_equal("anybody out there?", @response.body)
   end

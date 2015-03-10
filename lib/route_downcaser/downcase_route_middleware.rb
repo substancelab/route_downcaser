@@ -5,15 +5,14 @@ module RouteDowncaser
     end
 
     def call(env)
-      @env = env
-
+      env = env.clone
       if env['REQUEST_URI']
         if RouteDowncaser.redirect == true && !exclude_patterns_match?(env['REQUEST_URI'])
-          if path != path.downcase
-            return [301, {'Location' => downcased_uri, 'Content-Type' => 'text/html'}, []]
+          if path(env) != path(env).downcase
+            return [301, {'Location' => downcased_uri(env), 'Content-Type' => 'text/html'}, []]
           end
         else
-          env['REQUEST_URI'] = downcased_uri
+          env['REQUEST_URI'] = downcased_uri(env)
         end
       end
 
@@ -29,23 +28,23 @@ module RouteDowncaser
 
     private
 
-    def uri_items
-      @env['REQUEST_URI'].split('?')
+    def uri_items(env)
+      env['REQUEST_URI'].split('?')
     end
 
-    def path
-      uri_items[0]
+    def path(env)
+      uri_items(env).first
     end
 
-    def query?
-      uri_items.length > 1
+    def querystring?(env)
+      uri_items(env).length > 1
     end
 
-    def downcased_uri
-      if query?
-        "#{path.downcase!}?#{uri_items[1]}"
+    def downcased_uri(env)
+      if querystring?(env)
+        "#{path(env).downcase!}?#{uri_items(env)[1]}"
       else
-        path.downcase!
+        path(env).downcase!
       end
     end
 
