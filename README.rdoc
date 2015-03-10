@@ -1,14 +1,14 @@
 = RouteDowncaser
 
+{<img src="https://travis-ci.org/carstengehling/route_downcaser.png" />}[https://travis-ci.org/carstengehling/route_downcaser] {<img src="https://codeclimate.com/github/carstengehling/route_downcaser/badges/gpa.svg" />}[https://codeclimate.com/github/carstengehling/route_downcaser]
+
 Makes routing in Rails case-insensitive (and other Rack-servers like Sinatra)
 
 This gem hooks into the Rack middleware of Rails. This way all paths are downcased before dispatching to Rails' routing mechanism. Querystring parameters and asset paths are not changed in any way.
 
-{<img src="https://travis-ci.org/carstengehling/route_downcaser.png" />}[https://travis-ci.org/carstengehling/route_downcaser]
-
 == Requirements
 
-This gem has been tested with Rails 3.1, Rails 4.0, Rails 4.1 and Sinatra
+This gem has been tested with Rails 3.1, Rails 4.0, Rails 4.1, Rails 4.2 and Sinatra
 
 If you want this functionality in a Rails 2.x-3.0 application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
 
@@ -56,24 +56,6 @@ will respond to all these requests:
       http://localhost:4567/Foo
       http://localhost:4567/FOO
 
-== Background information
-
-Sometimes you may wish to market a url which contains a controller name - like www.myshop.com/specialoffer. If this is done on offline media it will cause potential customers trouble, if they don't use the correct casing. If, for some reason, the user types www.myshop.com/Specialoffer (with capital S), your Rails app will return a 404 not found.
-
-The strange thing is, that {the W3C specification}[http://www.w3.org/TR/WD-html40-970708/htmlweb.html] states:
-
-      URLs in general are case-sensitive (with the exception of machine names). There may be URLs, or parts of URLs, where case doesn't matter, but identifying these may not be easy. Users should always consider that URLs are case-sensitive.
-
-So www.myshop.com is case-insensitive and can be written as WWW.MYSHOP.COM, but the path (/specialoffer) is not.
-
-It may make perfect sense for the W3C guys, but not for the average user.
-
-When Rails introduced Rack middleware, it suddenly became possible to hook into the call-stack before the URL is used for action dispatching.
-
-At first I just made this code as a snippet and published it {on my blog}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive]. But since I found out that many people are actually using this, I finally decided to convert it into a gem.
-
-All it really does is to take the path and downcase it before dispatching. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
-
 == Configuration Options
 
 Configuration options can be set using an initializer in your application like so:
@@ -97,6 +79,24 @@ With this configuration option set to `true`, the middleware will 301 redirect a
 === exclude_patterns
 
 Array of regular expressions. If the requested path matches one of these expressions, RouteDowncaser will not change anything.
+
+== Background information
+
+Sometimes you may wish to market a url which contains a controller name - like www.myshop.com/specialoffer. If this is done on offline media it will cause potential customers trouble, if they don't use the correct casing. If, for some reason, the user types www.myshop.com/Specialoffer (with capital S), your Rails app will return a 404 not found.
+
+The strange thing is, that {the W3C specification}[http://www.w3.org/TR/WD-html40-970708/htmlweb.html] states:
+
+      URLs in general are case-sensitive (with the exception of machine names). There may be URLs, or parts of URLs, where case doesn't matter, but identifying these may not be easy. Users should always consider that URLs are case-sensitive.
+
+So www.myshop.com is case-insensitive and can be written as WWW.MYSHOP.COM, but the path (/specialoffer) is not.
+
+It may make perfect sense for the W3C guys, but not for the average user.
+
+When Rails introduced Rack middleware, it suddenly became possible to hook into the call-stack before the URL is used for action dispatching.
+
+At first I just made this code as a snippet and published it {on my blog}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive]. But since I found out that many people are actually using this, I finally decided to convert it into a gem.
+
+All it really does is to take the path and downcase it before dispatching. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
 
 == Changelog
 
