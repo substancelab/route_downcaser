@@ -2,7 +2,7 @@
 
 Makes routing in Rails case-insensitive (and other Rack-servers like Sinatra)
 
-This gem hooks into the Rack middleware of Rails. This way all paths are downcased before dispatching to Rails' routing mechanism. Querystring parameters are not changed in any way.
+This gem hooks into the Rack middleware of Rails. This way all paths are downcased before dispatching to Rails' routing mechanism. Querystring parameters and asset paths are not changed in any way.
 
 {<img src="https://travis-ci.org/carstengehling/route_downcaser.png" />}[https://travis-ci.org/carstengehling/route_downcaser]
 
