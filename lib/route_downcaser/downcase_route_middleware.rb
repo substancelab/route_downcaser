@@ -1,55 +1,78 @@
 module RouteDowncaser
+
   class DowncaseRouteMiddleware
     def initialize(app)
       @app = app
     end
 
     def call(env)
-      env = env.clone
-      if env['REQUEST_URI']
-        if RouteDowncaser.redirect == true && !exclude_patterns_match?(env['REQUEST_URI'])
-          if path(env) != path(env).downcase
-            return [301, {'Location' => downcased_uri(env), 'Content-Type' => 'text/html'}, []]
-          end
-        else
-          env['REQUEST_URI'] = downcased_uri(env)
+      new_env = env.clone
+
+      # Don't touch anything, if uri/path is part of exclude_patterns
+      if exclude_patterns_match?(new_env['REQUEST_URI']) or exclude_patterns_match?(new_env['PATH_INFO'])
+        @app.call(new_env)
+        return
+      end
+
+      # Downcase request_uri and/or path_info if applicable
+      if new_env['REQUEST_URI'].present?
+        new_env['REQUEST_URI'] = downcased_uri(new_env['REQUEST_URI'])
+      end
+
+      if new_env['PATH_INFO'].present?
+        new_env['PATH_INFO'] = downcased_uri(new_env['PATH_INFO'])
+      end
+
+      # If redirect configured, then return redirect request,
+      # if either request_uri or path_info has changed
+      if RouteDowncaser.redirect == true
+        if new_env["REQUEST_URI"].present? and new_env["REQUEST_URI"] != env["REQUEST_URI"]
+          return redirect_header(new_env["REQUEST_URI"])
+        end
+
+        if new_env["PATH_INFO"].present? and new_env["PATH_INFO"] != env["PATH_INFO"]
+          return redirect_header(new_env["PATH_INFO"])
         end
       end
 
-      if exclude_patterns_match?(env['PATH_INFO'])
-        pieces = env['PATH_INFO'].split('/')
-        env['PATH_INFO'] = pieces.slice(0..-2).join('/').downcase + '/' + pieces.last
-      elsif env['PATH_INFO']
-        env['PATH_INFO'] = env['PATH_INFO'].downcase
-      end
-
-      @app.call(env)
+      # Default just move to next chain in Rack callstack
+      # calling with downcased uri if needed
+      @app.call(new_env)
     end
 
     private
 
-    def uri_items(env)
-      env['REQUEST_URI'].split('?')
+    def exclude_patterns_match?(uri)
+      uri.match(Regexp.union(RouteDowncaser.exclude_patterns)) if uri and RouteDowncaser.exclude_patterns
     end
 
-    def path(env)
-      uri_items(env).first
-    end
-
-    def querystring?(env)
-      uri_items(env).length > 1
-    end
-
-    def downcased_uri(env)
-      if querystring?(env)
-        "#{path(env).downcase!}?#{uri_items(env)[1]}"
+    def downcased_uri(uri)
+      if has_querystring?(uri)
+        "#{path(uri).downcase}?#{querystring(uri)}"
       else
-        path(env).downcase!
+        path(uri).downcase
       end
     end
 
-    def exclude_patterns_match?(uri)
-      uri.match(Regexp.union(RouteDowncaser.exclude_patterns)) if uri
+    def path(uri)
+      uri_items(uri).first
+    end
+
+    def querystring(uri)
+      uri_items(uri).last
+    end
+
+    def has_querystring?(uri)
+      uri_items(uri).length > 1
+    end
+
+    def uri_items(uri)
+      uri.split('?')
+    end
+
+    def redirect_header(uri)
+      [301, {'Location' => uri, 'Content-Type' => 'text/html'}, []]
     end
   end
+
 end
