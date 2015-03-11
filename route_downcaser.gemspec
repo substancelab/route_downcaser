@@ -7,6 +7,7 @@ require "route_downcaser/version"
 Gem::Specification.new do |s|
   s.name        = "route_downcaser"
   s.version     = RouteDowncaser::VERSION
+  s.licenses    = ['MIT']
   s.authors     = ["Carsten Gehling"]
   s.email       = ["carsten@sarum.dk"]
   s.homepage    = "https://github.com/carstengehling/route_downcaser"
