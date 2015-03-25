@@ -66,9 +66,9 @@ Configuration options can be set using an initializer in your application like s
         config.redirect = true
 
         config.exclude_patterns = [
-          /\/assets\//i,
-          /\/fonts\//i,
-          /\/some\/important\/path/i
+          /assets\//i,
+          /fonts\//i,
+          /some\/important\/path/i
         ]
       end
 
