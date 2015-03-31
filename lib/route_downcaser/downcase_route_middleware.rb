@@ -9,35 +9,35 @@ module RouteDowncaser
       new_env = env.clone
 
       # Don't touch anything, if uri/path is part of exclude_patterns
-      if exclude_patterns_match?(new_env['REQUEST_URI']) or exclude_patterns_match?(new_env['PATH_INFO'])
-        @app.call(new_env)
-        return
-      end
-
-      # Downcase request_uri and/or path_info if applicable
-      if new_env['REQUEST_URI'].present?
-        new_env['REQUEST_URI'] = downcased_uri(new_env['REQUEST_URI'])
-      end
-
-      if new_env['PATH_INFO'].present?
-        new_env['PATH_INFO'] = downcased_uri(new_env['PATH_INFO'])
-      end
-
-      # If redirect configured, then return redirect request,
-      # if either request_uri or path_info has changed
-      if RouteDowncaser.redirect
-        if new_env["REQUEST_URI"].present? and new_env["REQUEST_URI"] != env["REQUEST_URI"]
-          return redirect_header(new_env["REQUEST_URI"])
+      # binding.pry
+      unless exclude_patterns_match?(new_env['REQUEST_URI']) or exclude_patterns_match?(new_env['PATH_INFO'])
+        # Downcase request_uri and/or path_info if applicable
+        if new_env['REQUEST_URI'].present?
+          new_env['REQUEST_URI'] = downcased_uri(new_env['REQUEST_URI'])
         end
 
-        if new_env["PATH_INFO"].present? and new_env["PATH_INFO"] != env["PATH_INFO"]
-          return redirect_header(new_env["PATH_INFO"])
+        if new_env['PATH_INFO'].present?
+          new_env['PATH_INFO'] = downcased_uri(new_env['PATH_INFO'])
         end
+
+        # If redirect configured, then return redirect request,
+        # if either request_uri or path_info has changed
+        if RouteDowncaser.redirect
+          if new_env["REQUEST_URI"].present? and new_env["REQUEST_URI"] != env["REQUEST_URI"]
+            return redirect_header(new_env["REQUEST_URI"])
+          end
+
+          if new_env["PATH_INFO"].present? and new_env["PATH_INFO"] != env["PATH_INFO"]
+            return redirect_header(new_env["PATH_INFO"])
+          end
+        end
+
       end
 
       # Default just move to next chain in Rack callstack
       # calling with downcased uri if needed
       @app.call(new_env)
+
     end
 
     private
