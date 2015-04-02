@@ -9,8 +9,8 @@ module RouteDowncaser
       new_env = env.clone
 
       # Don't touch anything, if uri/path is part of exclude_patterns
-      # binding.pry
-      unless exclude_patterns_match?(new_env['REQUEST_URI']) or exclude_patterns_match?(new_env['PATH_INFO'])
+
+      if (!exclude_patterns_match?(new_env['REQUEST_URI']) || !exclude_patterns_match?(new_env['PATH_INFO'])) && new_env['REQUEST_METHOD'] == "GET"
         # Downcase request_uri and/or path_info if applicable
         if new_env['REQUEST_URI'].present?
           new_env['REQUEST_URI'] = downcased_uri(new_env['REQUEST_URI'])
