@@ -6,6 +6,10 @@ module RouteDowncaser
     end
 
     def call(env)
+      dup._call(env)
+    end
+
+    def _call(env)
       old_env = {
         'REQUEST_URI' => env['REQUEST_URI'],
         'PATH_INFO' => env['PATH_INFO']
