@@ -10,8 +10,7 @@ module RouteDowncaser
 
       # Don't touch anything, if uri/path is part of exclude_patterns
       if exclude_patterns_match?(new_env['REQUEST_URI']) or exclude_patterns_match?(new_env['PATH_INFO'])
-        @app.call(new_env)
-        return
+        return @app.call(new_env)
       end
 
       # Downcase request_uri and/or path_info if applicable
