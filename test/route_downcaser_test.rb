@@ -39,6 +39,12 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       assert_equal("hello/world", @app.env['PATH_INFO'])
     end
+
+    test "the call environment should always be returned" do
+      callenv = { 'PATH_INFO' => "HELLO/WORLD" }
+      retval = RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal({ 'PATH_INFO' => "hello/world" }, retval)
+    end
   end
 
 
@@ -61,6 +67,12 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       callenv = { 'REQUEST_URI' => "ASSETS/IMAges/SpaceCat.jpeg" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       assert_equal("ASSETS/IMAges/SpaceCat.jpeg", @app.env['REQUEST_URI'])
+    end
+
+    test "the call environment should always be returned" do
+      callenv = { 'REQUEST_URI' => "ASSETS/IMAges/SpaceCat.jpeg" }
+      retval = RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal(callenv, retval)
     end
   end
 
