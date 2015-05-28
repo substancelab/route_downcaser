@@ -100,6 +100,12 @@ All it really does is to take the path and downcase it before dispatching. Query
 
 == Changelog
 
+=== 1.1.2
+
+POST requests must never result in a redirect, even if the config.redirect is true
+
+More robust test-cases have been added
+
 === 1.1.1
 
 Fixed {issue #17}[https://github.com/carstengehling/route_downcaser/issues/17]. Thanks go to {TkiTDO}[https://github.com/TikiTDO]
