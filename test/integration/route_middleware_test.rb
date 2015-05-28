@@ -20,4 +20,25 @@ class RouteMiddlewareTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert(@response.body.include?("fancy manifest file"))
   end
+
+  test "Redirect instead of rewrite" do
+    RouteDowncaser.configuration do |config|
+      config.redirect = true
+    end
+
+    get "/HELLO/WORLD"
+    assert_response :redirect
+    assert_redirected_to("/hello/world")
+  end
+
+  test "Only GET requests should be redirected, POST should rewrite" do
+    RouteDowncaser.configuration do |config|
+      config.redirect = true
+    end
+
+    post "/HELLO/WORLD"
+    assert_response :success
+    assert_equal("anybody out there?", @response.body)
+  end
+
 end

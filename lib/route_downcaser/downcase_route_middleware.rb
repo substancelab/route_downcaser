@@ -24,7 +24,7 @@ module RouteDowncaser
 
       # If redirect configured, then return redirect request,
       # if either request_uri or path_info has changed
-      if RouteDowncaser.redirect
+      if RouteDowncaser.redirect && new_env['REQUEST_METHOD'] == "GET"
         if new_env["REQUEST_URI"].present? and new_env["REQUEST_URI"] != env["REQUEST_URI"]
           return redirect_header(new_env["REQUEST_URI"])
         end
