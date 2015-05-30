@@ -41,4 +41,15 @@ class RouteMiddlewareTest < ActionDispatch::IntegrationTest
     assert_equal("anybody out there?", @response.body)
   end
 
+  test 'Input and output env are the same' do
+    class App
+      def call(env) env; end
+    end
+
+    middleware = RouteDowncaser::DowncaseRouteMiddleware.new(App.new)
+
+    env = {}
+    new_env = middleware.call env
+    assert(new_env.equal? env)
+  end
 end

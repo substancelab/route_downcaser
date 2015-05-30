@@ -6,7 +6,10 @@ module RouteDowncaser
     end
 
     def call(env)
-      new_env = env.clone
+      dup._call(env)
+    end
+
+    def _call(env)
       old_env = {
         'REQUEST_URI' => env['REQUEST_URI'],
         'PATH_INFO' => env['PATH_INFO']
@@ -22,7 +25,7 @@ module RouteDowncaser
         env['REQUEST_URI'] = downcased_uri(env['REQUEST_URI'])
       end
 
-      if new_env['PATH_INFO'].present?
+      if env['PATH_INFO'].present?
         env['PATH_INFO'] = downcased_uri(env['PATH_INFO'])
       end
 

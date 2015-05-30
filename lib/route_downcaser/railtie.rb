@@ -5,4 +5,3 @@ module RouteDowncaser
     end
   end
 end
-
