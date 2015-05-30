@@ -100,6 +100,20 @@ All it really does is to take the path and downcase it before dispatching. Query
 
 == Changelog
 
+=== 1.1.3
+
+Fixes issue #14. If Devise/Warden is used in the Rails app, RouteDowncaser::DowncaseRouteMiddleware needs to be inserted before Warden::Manager in the middleware list.
+
+=== 1.1.2
+
+POST requests must never result in a redirect, even if the config.redirect is true
+
+More robust test-cases have been added
+
+=== 1.1.1
+
+Fixed {issue #17}[https://github.com/carstengehling/route_downcaser/issues/17]. Thanks go to {TkiTDO}[https://github.com/TikiTDO]
+
 === 1.1.0
 
 Refactored main code and tests for much better structure
