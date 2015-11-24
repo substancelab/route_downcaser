@@ -1,4 +1,4 @@
-module Configuration
+module RouteDowncaser::Configuration
 
   def configuration
     yield self
