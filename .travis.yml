@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - "2.2.0"
+  - "2.2.1"
 env:
   - "RAILS_VERSION=4.1.9"
   - "RAILS_VERSION=4.2.0"
