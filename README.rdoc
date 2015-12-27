@@ -100,6 +100,10 @@ All it really does is to take the path and downcase it before dispatching. Query
 
 == Changelog
 
+=== 1.1.5
+
+Configuration now namespaced to avoid name clashing with other modules. Thanks goes to {tgk}[https://github.com/tgk] for this
+
 === 1.1.4
 
 Better solution to the incompatibility issue with Warden. Thank you to {l3akage}[https://github.com/l3akage]
