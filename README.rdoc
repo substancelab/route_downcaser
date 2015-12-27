@@ -2,7 +2,7 @@
 
 {<img src="https://travis-ci.org/carstengehling/route_downcaser.png" />}[https://travis-ci.org/carstengehling/route_downcaser] {<img src="https://codeclimate.com/github/carstengehling/route_downcaser/badges/gpa.svg" />}[https://codeclimate.com/github/carstengehling/route_downcaser]
 
-<b>Note about Rails 5.0.0:/</b> Rails 5.0.0.beta1 was released on December 18th. RouteDowncaser 1.1.5 has been tested to work with this beta-version of Rails.
+<b>Note about Rails 5.0.0:</b> Rails 5.0.0.beta1 was released on December 18th. RouteDowncaser 1.1.5 has been tested to work with this beta-version of Rails.
 
 Makes routing in Rails case-insensitive (and other Rack-servers like Sinatra)
 
