@@ -2,13 +2,10 @@ language: ruby
 rvm:
   - "2.2.1"
   - "2.2.2"
-gemfile:
-  - gemfiles/Gemfile.rails-4.1.9
-  - gemfiles/Gemfile.rails-4.2.0
-  - gemfiles/Gemfile.rails-5.0.0.beta1
-
 env:
-  - ISOLATED=true
+  - "RAILS_VERSION=4.1.9"
+  - "RAILS_VERSION=4.2.0"
+  - "RAILS_VERSION=5.0.0.beta1"
 
 matrix:
   exclude:
