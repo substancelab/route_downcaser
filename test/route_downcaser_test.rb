@@ -126,4 +126,34 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
   end
 
+
+  class MultibyteTests < ActiveSupport::TestCase
+    setup do
+      @app = MyMockApp.new
+      RouteDowncaser.configuration do |config|
+        config.redirect = false
+        config.exclude_patterns = nil
+      end
+    end
+
+    test "Multibyte REQUEST_URI path-part is downcased" do
+      callenv = { 'REQUEST_URI' => "ШУРШАЩАЯ ЗМЕЯ", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("шуршащая змея", @app.env['REQUEST_URI'])
+    end
+
+    test "Multibyte PATH_INFO is downcased" do
+      callenv = { 'PATH_INFO' => "ВЕЛОСИПЕД", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("велосипед", @app.env['PATH_INFO'])
+    end
+
+    test "Additional multibyte downcase tests" do
+      callenv = { 'REQUEST_URI' => "ПИВО", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("пиво", @app.env['REQUEST_URI'])
+    end
+  end
+
+
 end
