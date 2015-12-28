@@ -14,6 +14,8 @@ This gem has been tested with Rails 3.1.x, 4.0.x, 4.1.x, 4.2.x. It reportedly al
 
 If you want this functionality in a Rails 2.x-3.0 application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
 
+<b>Note:</b> from version 1.2.0, route_downcaser depends on ActiveSupport 3.2 or later. This was necessary to enable support for multibyte characters.
+
 == Installing
 
 === Rails
@@ -101,6 +103,10 @@ At first I just made this code as a snippet and published it {on my blog}[http:/
 All it really does is to take the path and downcase it before dispatching. Querystring parameters are NOT touched, they keep their casing, since it may have some contextual meaning.
 
 == Changelog
+
+=== 1.2.0
+
+Support for multibyte characters - dependency on ActiveSupport version 3.2 or later
 
 === 1.1.5
 
