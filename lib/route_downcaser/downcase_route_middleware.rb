@@ -20,6 +20,10 @@ module RouteDowncaser
         return @app.call(env)
       end
 
+      unless include_patterns_match?(env['REQUEST_URI']) or include_patterns_match?(env['PATH_INFO'])
+        return@app.call(env)
+      end
+
       # Downcase request_uri and/or path_info if applicable
       if env['REQUEST_URI'].present?
         env['REQUEST_URI'] = downcased_uri(env['REQUEST_URI'])
@@ -47,6 +51,10 @@ module RouteDowncaser
     end
 
     private
+
+    def include_patterns_match?(uri)
+      uri.match(Regexp.union(RouteDowncaser.include_patterns)) if uri and RouteDowncaser.include_patterns
+    end
 
     def exclude_patterns_match?(uri)
       uri.match(Regexp.union(RouteDowncaser.exclude_patterns)) if uri and RouteDowncaser.exclude_patterns
