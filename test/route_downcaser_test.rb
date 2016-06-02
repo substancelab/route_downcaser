@@ -19,6 +19,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       RouteDowncaser.configuration do |config|
         config.redirect = false
         config.exclude_patterns = nil
+        config.include_patterns = nil
       end
     end
 
@@ -53,6 +54,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       RouteDowncaser.configuration do |config|
         config.redirect = false
         config.exclude_patterns = [/assets\//i, /fonts\//i]
+        config.include_patterns = nil
       end
     end
 
@@ -80,6 +82,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       @app = MyMockApp.new
       RouteDowncaser.configuration do |config|
         config.redirect = false
+        config.exclude_patterns = nil
         config.include_patterns = [/hello\//i]
       end
     end
@@ -138,6 +141,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       RouteDowncaser.configuration do |config|
         config.redirect = true
         config.exclude_patterns = nil
+        config.include_patterns = nil
       end
     end
 
@@ -158,29 +162,67 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
   end
 
-
   class RedirectTrueExcludePatternsTests < ActiveSupport::TestCase
     setup do
       @app = MyMockApp.new
       RouteDowncaser.configuration do |config|
         config.redirect = true
         config.exclude_patterns = [/assets\//i, /fonts\//i]
+        config.include_patterns = nil
       end
     end
 
-    test "when redirect is true it does not redirect, if REQUEST_URI match exclude patterns" do
+    test "when redirect is true it does not redirect if REQUEST_URI match exclude patterns" do
       callenv = { 'REQUEST_URI' => "fonts/Icons.woff", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       assert_equal("fonts/Icons.woff", @app.env['REQUEST_URI'])
     end
 
-    test "when redirect is true it does not redirect, if PATH_INFO match exclude patterns" do
+    test "when redirect is true it does not redirect if PATH_INFO match exclude patterns" do
       callenv = { 'PATH_INFO' => "fonts/Icons.woff", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       assert_equal("fonts/Icons.woff", @app.env['PATH_INFO'])
     end
   end
 
+  class RedirectTrueIncludePatternsTests < ActiveSupport::TestCase
+    setup do
+      @app = MyMockApp.new
+      RouteDowncaser.configuration do |config|
+        config.redirect = true
+        config.exclude_patterns = nil
+        config.include_patterns = [/hello\//i]
+      end
+    end
+
+    test "when redirect is true it does not redirect if REQUEST_URI doesn't match include patterns" do
+      callenv = { 'REQUEST_URI' => "fonts/Icons.woff", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("fonts/Icons.woff", @app.env['REQUEST_URI'])
+    end
+
+    test "when redirect is true it does not redirect if PATH_INFO doesn't match include patterns" do
+      callenv = { 'PATH_INFO' => "fonts/Icons.woff", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("fonts/Icons.woff", @app.env['PATH_INFO'])
+    end
+
+    test "when redirect is true it redirects if REQUEST_URI matches include patterns" do
+      callenv = { 'REQUEST_URI' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
+      assert_equal(
+        [301, {'Location' => "hello/world", 'Content-Type' => 'text/html'}, []],
+        RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      )
+    end
+
+    test "when redirect is true it redirects if PATH_INFO matches include patterns" do
+      callenv = { 'PATH_INFO' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
+      assert_equal(
+        [301, {'Location' => "hello/world", 'Content-Type' => 'text/html'}, []],
+        RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      )
+    end
+  end
 
   class MultibyteTests < ActiveSupport::TestCase
     setup do
@@ -188,6 +230,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       RouteDowncaser.configuration do |config|
         config.redirect = false
         config.exclude_patterns = nil
+        config.include_patterns = nil
       end
     end
 
