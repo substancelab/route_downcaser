@@ -22,7 +22,7 @@ module RouteDowncaser
 
       # Don't touch anything, unless uri/path is part of include_patterns
       unless include_patterns_match?(env['REQUEST_URI']) || include_patterns_match?(env['PATH_INFO'])
-        return@app.call(env)
+        return @app.call(env)
       end
 
       # Downcase request_uri and/or path_info if applicable
