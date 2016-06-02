@@ -6,6 +6,7 @@ module RouteDowncaser
   extend RouteDowncaser::Configuration
 
   define_setting :redirect, false
+  define_setting :include_patterns
   define_setting :exclude_patterns, [/assets\//i]
   define_setting :include_patterns, []
 end
