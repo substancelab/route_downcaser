@@ -80,32 +80,32 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       @app = MyMockApp.new
       RouteDowncaser.configuration do |config|
         config.redirect = false
-        config.include_patterns = [/assets\//i]
+        config.include_patterns = [/item\//i]
       end
     end
 
     test "when REQUEST_URI is found in include_patterns, REQUEST_URI path-part is downcased" do
-      callenv = { 'REQUEST_URI' => "ASSETS/IMAges/SpaceCat.jpeg", 'REQUEST_METHOD' => "GET" }
+      callenv = { 'REQUEST_URI' => "item/HUMAN-REadable-uri", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal("assets/images/spacecat.jpeg", @app.env['REQUEST_URI'])
+      assert_equal("items/human-readable-uri", @app.env['REQUEST_URI'])
     end
 
     test "when PATH_INFO is found in include_patterns, entire PATH_INFO is downcased" do
-      callenv = { 'PATH_INFO' => "ASSETS/IMAges/SpaceCat.jpeg", 'REQUEST_METHOD' => "GET" }
+      callenv = { 'PATH_INFO' => "item/HUMAN-REadable-uri", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal("assets/images/spacecat.jpeg", @app.env['PATH_INFO'])
+      assert_equal("items/human-readable-uri", @app.env['PATH_INFO'])
     end
 
-    test "when PATH_INFO is not found in include_patterns, do nothing" do
-      callenv = { 'PATH_INFO' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
+    test "when PATH_INFO is not found in include_patterns, do not change PATH_INFO" do
+      callenv = { 'PATH_INFO' => "thing/HUMAN-REadable-uri", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal("HELLO/WORLD", @app.env['PATH_INFO'])
+      assert_equal("thing/HUMAN-REadable-uri", @app.env['PATH_INFO'])
     end
 
-    test "when REQUEST_URI is not found in include_patterns, do nothing" do
-      callenv = { 'PATH_INFO' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
+    test "when REQUEST_URI is not found in include_patterns, do not change REQUEST_URI" do
+      callenv = { 'PATH_INFO' => "thing/HUMAN-REadable-uri", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal("HELLO/WORLD", @app.env['REQUEST_URI'])
+      assert_equal("thing/HUMAN-REadable-uri", @app.env['REQUEST_URI'])
     end
   end
 
