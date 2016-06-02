@@ -47,7 +47,6 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
   end
 
-
   class ExcludePatternsTests < ActiveSupport::TestCase
     setup do
       @app = MyMockApp.new
@@ -76,6 +75,62 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
   end
 
+  class IncludePatternsTests < ActiveSupport::TestCase
+    setup do
+      @app = MyMockApp.new
+      RouteDowncaser.configuration do |config|
+        config.redirect = false
+        config.include_patterns = [/assets\//i]
+      end
+    end
+
+    test "when REQUEST_URI is found in include_patterns, REQUEST_URI path-part is downcased" do
+      callenv = { 'REQUEST_URI' => "ASSETS/IMAges/SpaceCat.jpeg", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("assets/images/spacecat.jpeg", @app.env['REQUEST_URI'])
+    end
+
+    test "when PATH_INFO is found in include_patterns, entire PATH_INFO is downcased" do
+      callenv = { 'PATH_INFO' => "ASSETS/IMAges/SpaceCat.jpeg", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("assets/images/spacecat.jpeg", @app.env['PATH_INFO'])
+    end
+
+    test "when PATH_INFO is not found in include_patterns, do nothing" do
+      callenv = { 'PATH_INFO' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("HELLO/WORLD", @app.env['PATH_INFO'])
+    end
+
+    test "when REQUEST_URI is not found in include_patterns, do nothing" do
+      callenv = { 'PATH_INFO' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("HELLO/WORLD", @app.env['REQUEST_URI'])
+    end
+  end
+
+  class IncludeAndExcludePatternsTests < ActiveSupport::TestCase
+    setup do
+      @app = MyMockApp.new
+      RouteDowncaser.configuration do |config|
+        config.redirect = false
+        config.exclude_patterns = [/assets\//i]
+        config.include_patterns = [/assets\//i]
+      end
+    end
+
+    test "when REQUEST_URI is found in both include and exclude patterns, do nothing" do
+      callenv = { 'REQUEST_URI' => "ASSETS/IMAges/SpaceCat.jpeg", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("ASSETS/IMAges/SpaceCat.jpeg", @app.env['REQUEST_URI'])
+    end
+
+    test "when PATH_INFO is found in both include and exclude patterns, do nothing" do
+      callenv = { 'PATH_INFO' => "ASSETS/IMAges/SpaceCat.jpeg", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("ASSETS/IMAges/SpaceCat.jpeg", @app.env['PATH_INFO'])
+    end
+  end
 
   class RedirectTrueTests < ActiveSupport::TestCase
     setup do
