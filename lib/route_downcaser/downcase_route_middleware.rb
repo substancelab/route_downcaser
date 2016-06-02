@@ -21,7 +21,7 @@ module RouteDowncaser
       end
 
       # Don't touch anything, unless uri/path is part of include_patterns
-      unless include_patterns_match?(env['REQUEST_URI']) or include_patterns_match?(env['PATH_INFO'])
+      unless include_patterns_match?(env['REQUEST_URI']) || include_patterns_match?(env['PATH_INFO'])
         return@app.call(env)
       end
 
@@ -54,7 +54,7 @@ module RouteDowncaser
     private
 
     def include_patterns_match?(uri)
-      uri.match(Regexp.union(RouteDowncaser.include_patterns)) if uri and RouteDowncaser.include_patterns
+      uri.match(Regexp.union(RouteDowncaser.include_patterns)) if uri && RouteDowncaser.include_patterns
     end
 
     def exclude_patterns_match?(uri)
