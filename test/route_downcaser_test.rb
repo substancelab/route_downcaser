@@ -97,15 +97,15 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
 
     test "when PATH_INFO is not found in include_patterns, do not change PATH_INFO" do
-      callenv = { 'PATH_INFO' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
+      callenv = { 'PATH_INFO' => "HI/WORLD", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal("HELLO/WORLD", @app.env['PATH_INFO'])
+      assert_equal("HI/WORLD", @app.env['PATH_INFO'])
     end
 
     test "when REQUEST_URI is not found in include_patterns, do not change REQUEST_URI" do
-      callenv = { 'PATH_INFO' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
+      callenv = { 'REQUEST_URI' => "HI/WORLD", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal("HELLO/WORLD", @app.env['REQUEST_URI'])
+      assert_equal("HI/WORLD", @app.env['REQUEST_URI'])
     end
   end
 
