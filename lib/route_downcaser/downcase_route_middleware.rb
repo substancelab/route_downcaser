@@ -16,7 +16,7 @@ module RouteDowncaser
       }
 
       # Don't touch anything, if uri/path is part of exclude_patterns
-      if exclude_patterns_match?(env['REQUEST_URI']) or exclude_patterns_match?(env['PATH_INFO'])
+      if exclude_patterns_match?(env['REQUEST_URI']) || exclude_patterns_match?(env['PATH_INFO'])
         return @app.call(env)
       end
 
@@ -36,7 +36,7 @@ module RouteDowncaser
           return redirect_header(env["REQUEST_URI"])
         end
 
-        if env["PATH_INFO"].present? and old_env["PATH_INFO"] != env["PATH_INFO"]
+        if env["PATH_INFO"].present? && old_env["PATH_INFO"] != env["PATH_INFO"]
           return redirect_header(env["PATH_INFO"])
         end
       end
@@ -49,7 +49,7 @@ module RouteDowncaser
     private
 
     def exclude_patterns_match?(uri)
-      uri.match(Regexp.union(RouteDowncaser.exclude_patterns)) if uri and RouteDowncaser.exclude_patterns
+      uri.match(Regexp.union(RouteDowncaser.exclude_patterns)) if uri && RouteDowncaser.exclude_patterns
     end
 
     def downcased_uri(uri)
