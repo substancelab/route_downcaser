@@ -145,7 +145,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       end
     end
 
-    test "when redirect is true it redirects REQUEST_URI" do
+    test "when redirect is true, it redirects REQUEST_URI" do
       callenv = { 'REQUEST_URI' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
       assert_equal(
         [301, {'Location' => "hello/world", 'Content-Type' => 'text/html'}, []],
@@ -153,7 +153,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       )
     end
 
-    test "when redirect is true it redirects PATH_INFO" do
+    test "when redirect is true, it redirects PATH_INFO" do
       callenv = { 'PATH_INFO' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
       assert_equal(
         [301, {'Location' => "hello/world", 'Content-Type' => 'text/html'}, []],
@@ -172,13 +172,13 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       end
     end
 
-    test "when redirect is true it does not redirect if REQUEST_URI match exclude patterns" do
+    test "when redirect is true, it does not redirect if REQUEST_URI match exclude patterns" do
       callenv = { 'REQUEST_URI' => "fonts/Icons.woff", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       assert_equal("fonts/Icons.woff", @app.env['REQUEST_URI'])
     end
 
-    test "when redirect is true it does not redirect if PATH_INFO match exclude patterns" do
+    test "when redirect is true, it does not redirect if PATH_INFO match exclude patterns" do
       callenv = { 'PATH_INFO' => "fonts/Icons.woff", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       assert_equal("fonts/Icons.woff", @app.env['PATH_INFO'])
@@ -195,19 +195,19 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       end
     end
 
-    test "when redirect is true it does not redirect if REQUEST_URI doesn't match include patterns" do
+    test "when redirect is true, it does not redirect if REQUEST_URI doesn't match include patterns" do
       callenv = { 'REQUEST_URI' => "fonts/Icons.woff", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       assert_equal("fonts/Icons.woff", @app.env['REQUEST_URI'])
     end
 
-    test "when redirect is true it does not redirect if PATH_INFO doesn't match include patterns" do
+    test "when redirect is true, it does not redirect if PATH_INFO doesn't match include patterns" do
       callenv = { 'PATH_INFO' => "fonts/Icons.woff", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       assert_equal("fonts/Icons.woff", @app.env['PATH_INFO'])
     end
 
-    test "when redirect is true it redirects if REQUEST_URI matches include patterns" do
+    test "when redirect is true, it redirects if REQUEST_URI matches include patterns" do
       callenv = { 'REQUEST_URI' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
       assert_equal(
         [301, {'Location' => "hello/world", 'Content-Type' => 'text/html'}, []],
@@ -215,7 +215,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       )
     end
 
-    test "when redirect is true it redirects if PATH_INFO matches include patterns" do
+    test "when redirect is true, it redirects if PATH_INFO matches include patterns" do
       callenv = { 'PATH_INFO' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
       assert_equal(
         [301, {'Location' => "hello/world", 'Content-Type' => 'text/html'}, []],
