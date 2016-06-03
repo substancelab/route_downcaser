@@ -84,6 +84,10 @@ With this configuration option set to `true`, the middleware will 301 redirect a
 
 Array of regular expressions. If the requested path matches one of these expressions, RouteDowncaser will not change anything.
 
+=== include_patterns
+
+Array of regular expressions. If this option is present, only included patterns will be downcased. All other URLs will not be changed. If a pattern is present in both include_patterns and exclude_patterns, it will not be changed.
+
 == Background information
 
 Sometimes you may wish to market a url which contains a controller name - like www.myshop.com/specialoffer. If this is done on offline media it will cause potential customers trouble, if they don't use the correct casing. If, for some reason, the user types www.myshop.com/Specialoffer (with capital S), your Rails app will return a 404 not found.
