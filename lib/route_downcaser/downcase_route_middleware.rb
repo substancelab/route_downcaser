@@ -20,7 +20,7 @@ module RouteDowncaser
         return @app.call(env)
       end
 
-      # Don't touch anything uf there are include_patterns and uri/path isn't included
+      # Don't touch anything if there are include_patterns and uri/path isn't included
       if RouteDowncaser.include_patterns.to_a.any?
         unless include_patterns_match?(env['REQUEST_URI']) || include_patterns_match?(env['PATH_INFO'])
           return @app.call(env)
