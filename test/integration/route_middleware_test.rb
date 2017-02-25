@@ -27,8 +27,8 @@ class RouteMiddlewareTest < ActionDispatch::IntegrationTest
     end
 
     get "/HELLO/WORLD"
-    assert_response :redirect
-    assert_redirected_to("/hello/world")
+    assert_equal 301, response.status
+    assert_equal "/hello/world", response.location
   end
 
   test "Only GET requests should be redirected, POST should rewrite" do
