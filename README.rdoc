@@ -2,15 +2,13 @@
 
 {<img src="https://travis-ci.org/carstengehling/route_downcaser.png" />}[https://travis-ci.org/carstengehling/route_downcaser] {<img src="https://codeclimate.com/github/carstengehling/route_downcaser/badges/gpa.svg" />}[https://codeclimate.com/github/carstengehling/route_downcaser]
 
-<b>Note about Rails 5.0.0:</b> Rails 5.0.0.beta1 was released on December 18th. RouteDowncaser 1.1.5 has been tested to work with this beta-version of Rails.
-
 Makes routing in Rails case-insensitive (and other Rack-servers like Sinatra)
 
 This gem hooks into the Rack middleware of Rails. This way all paths are downcased before dispatching to Rails' routing mechanism. Querystring parameters and asset paths are not changed in any way.
 
 == Requirements
 
-This gem has been tested with Rails 3.1.x, 4.0.x, 4.1.x, 4.2.x. It reportedly also works with Sinata, although I do not use Sinatra myself. Sinatra test-cases will be most welcome.
+This gem has been tested with Rails 3.1.x, 4.0.x, 4.1.x, 4.2.x, 5.0.x. It reportedly also works with Sinata, although I do not use Sinatra myself. Sinatra test-cases will be most welcome.
 
 If you want this functionality in a Rails 2.x-3.0 application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive].
 

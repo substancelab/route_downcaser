@@ -5,12 +5,12 @@ rvm:
 env:
   - "RAILS_VERSION=4.1.9"
   - "RAILS_VERSION=4.2.0"
-  - "RAILS_VERSION=5.0.0.beta1"
+  - "RAILS_VERSION=5.0.1"
 
 matrix:
   exclude:
     - rvm: 2.2.1
-      env: "RAILS_VERSION=5.0.0.beta1"
+      env: "RAILS_VERSION=5.0.1"
 
 addons:
   code_climate:
