@@ -8,6 +8,7 @@ env:
   - "RAILS_VERSION=4.1.9"
   - "RAILS_VERSION=4.2.0"
   - "RAILS_VERSION=5.0.1"
+  - "RAILS_VERSION=5.1.0.beta1"
 
 matrix:
   exclude:
