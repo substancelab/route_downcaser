@@ -1,5 +1,5 @@
 class HelloController < ApplicationController
   def world
-    render :text => "anybody out there?"
+    render :plain => "anybody out there?"
   end
 end
