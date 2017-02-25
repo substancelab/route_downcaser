@@ -1,7 +1,9 @@
 language: ruby
 rvm:
-  - "2.2.1"
-  - "2.2.2"
+  - 2.2.6
+  - 2.3.3
+  - 2.4.0
+
 env:
   - "RAILS_VERSION=4.1.9"
   - "RAILS_VERSION=4.2.0"
@@ -9,7 +11,7 @@ env:
 
 matrix:
   exclude:
-    - rvm: 2.2.1
+    - rvm: 2.2.6
       env: "RAILS_VERSION=5.0.1"
 
 addons:
