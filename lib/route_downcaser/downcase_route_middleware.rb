@@ -19,13 +19,8 @@ module RouteDowncaser
       end
 
       # Downcase request_uri and/or path_info if applicable
-      if request_uri.present?
-        request_uri = downcased_uri(request_uri)
-      end
-
-      if path_info.present?
-        path_info = downcased_uri(path_info)
-      end
+      request_uri = downcased_uri(request_uri)
+      path_info = downcased_uri(path_info)
 
       # If redirect configured, then return redirect request,
       # if either request_uri or path_info has changed
@@ -60,6 +55,7 @@ module RouteDowncaser
     end
 
     def downcased_uri(uri)
+      return nil unless uri.present?
       if has_querystring?(uri)
         "#{path(uri).mb_chars.downcase}?#{querystring(uri)}"
       else
