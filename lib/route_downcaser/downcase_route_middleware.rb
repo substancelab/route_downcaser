@@ -10,36 +10,37 @@ module RouteDowncaser
     end
 
     def _call(env)
-      old_env = {
-        'REQUEST_URI' => env['REQUEST_URI'],
-        'PATH_INFO' => env['PATH_INFO']
-      }
+      request_uri = env['REQUEST_URI']
+      path_info = env['PATH_INFO']
 
       # Don't touch anything, if uri/path is part of exclude_patterns
-      if excluded?(env.values_at('REQUEST_URI', 'PATH_INFO'))
+      if excluded?([request_uri, path_info])
         return @app.call(env)
       end
 
       # Downcase request_uri and/or path_info if applicable
-      if env['REQUEST_URI'].present?
-        env['REQUEST_URI'] = downcased_uri(env['REQUEST_URI'])
+      if request_uri.present?
+        request_uri = downcased_uri(request_uri)
       end
 
-      if env['PATH_INFO'].present?
-        env['PATH_INFO'] = downcased_uri(env['PATH_INFO'])
+      if path_info.present?
+        path_info = downcased_uri(path_info)
       end
 
       # If redirect configured, then return redirect request,
       # if either request_uri or path_info has changed
       if RouteDowncaser.redirect && env['REQUEST_METHOD'] == "GET"
-        if changed?('REQUEST_URI', old_env, env)
-          return redirect_header(env["REQUEST_URI"])
+        if request_uri.present? && request_uri != env['REQUEST_URI']
+          return redirect_header(request_uri)
         end
 
-        if changed?('PATH_INFO', old_env, env)
-          return redirect_header(env["PATH_INFO"])
+        if path_info.present? && path_info != env['PATH_INFO']
+          return redirect_header(path_info)
         end
       end
+
+      env['PATH_INFO'] = path_info.to_s if path_info
+      env['REQUEST_URI'] = request_uri.to_s if request_uri
 
       # Default just move to next chain in Rack callstack
       # calling with downcased uri if needed
@@ -47,10 +48,6 @@ module RouteDowncaser
     end
 
     private
-
-    def changed?(key, old_env, env)
-      env[key].present? and old_env[key] != env[key]
-    end
 
     def exclude_patterns_match?(uri)
       uri.match(Regexp.union(RouteDowncaser.exclude_patterns)) if uri and RouteDowncaser.exclude_patterns
