@@ -102,6 +102,12 @@ All it really does is to take the path and downcase it before dispatching. Query
 
 == Changelog
 
+=== 1.2.1
+
+Support for Rails 5.1, we now support most recently released versions of Rails 4.2, 5.0, and 5.1. Thanks to {pepawel}[https://github.com/pepawel].
+
+No more deprecation warnings about passing strings or symbols to the middleware builder. Thanks, {flou}[https://github.com/flou]!
+
 === 1.2.0
 
 Support for multibyte characters - dependency on ActiveSupport version 3.2 or later
