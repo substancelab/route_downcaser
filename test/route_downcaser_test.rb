@@ -34,6 +34,12 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       assert_equal("hello/world?FOO=BAR", @app.env['REQUEST_URI'])
     end
 
+    test "REQUEST_URI querystring parameters can contain ?" do
+      callenv = { 'REQUEST_URI' => "HELLO/WORLD?FOO=BAR?BAZ=BING", 'REQUEST_METHOD' => "GET" }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("hello/world?FOO=BAR?BAZ=BING", @app.env['REQUEST_URI'])
+    end
+
     test "entire PATH_INFO is downcased" do
       callenv = { 'PATH_INFO' => "HELLO/WORLD", 'REQUEST_METHOD' => "GET" }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
