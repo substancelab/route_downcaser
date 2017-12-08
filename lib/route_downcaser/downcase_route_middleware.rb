@@ -68,7 +68,7 @@ module RouteDowncaser
     end
 
     def querystring(uri)
-      uri_items(uri).last
+      uri_items(uri).drop(1).join('?')
     end
 
     def has_querystring?(uri)
