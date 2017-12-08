@@ -68,7 +68,7 @@ module RouteDowncaser
     end
 
     def querystring(uri)
-      uri_items(uri).drop(1).join('?')
+      uri_items(uri).last
     end
 
     def has_querystring?(uri)
@@ -76,7 +76,7 @@ module RouteDowncaser
     end
 
     def uri_items(uri)
-      uri.split('?')
+      uri.split('?', 2)
     end
 
     def redirect_header(uri)
