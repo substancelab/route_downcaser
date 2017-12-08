@@ -102,6 +102,10 @@ All it really does is to take the path and downcase it before dispatching. Query
 
 == Changelog
 
+=== Unreleased
+
+* Don't lose parts of the querystring when it contains multiple questionmarks. Thanks, {rmeritz}[https://github.com/rmeritz].
+
 === 1.2.1
 
 Support for Rails 5.1, we now support most recently released versions of Rails 4.2, 5.0, and 5.1. Thanks to {pepawel}[https://github.com/pepawel].
