@@ -1,5 +1,4 @@
 module RouteDowncaser
-
   class DowncaseRouteMiddleware
     def initialize(app)
       @app = app
@@ -14,9 +13,7 @@ module RouteDowncaser
       path_info = env['PATH_INFO']
 
       # Don't touch anything, if uri/path is part of exclude_patterns
-      if excluded?([request_uri, path_info])
-        return @app.call(env)
-      end
+      return @app.call(env) if excluded?([request_uri, path_info])
 
       # Downcase request_uri and/or path_info if applicable
       request_uri = downcased_uri(request_uri)
@@ -24,7 +21,7 @@ module RouteDowncaser
 
       # If redirect configured, then return redirect request,
       # if either request_uri or path_info has changed
-      if RouteDowncaser.redirect && env['REQUEST_METHOD'] == "GET"
+      if RouteDowncaser.redirect && env['REQUEST_METHOD'] == 'GET'
         if request_uri.present? && request_uri != env['REQUEST_URI']
           return redirect_header(request_uri)
         end
@@ -45,13 +42,13 @@ module RouteDowncaser
     private
 
     def exclude_patterns_match?(uri)
-      uri.match(Regexp.union(RouteDowncaser.exclude_patterns)) if uri and RouteDowncaser.exclude_patterns
+      uri.match(Regexp.union(RouteDowncaser.exclude_patterns)) if uri && RouteDowncaser.exclude_patterns
     end
 
     def excluded?(paths)
-      paths.any? { |path|
+      paths.any? do |path|
         exclude_patterns_match?(path)
-      }
+      end
     end
 
     def downcased_uri(uri)
@@ -80,8 +77,7 @@ module RouteDowncaser
     end
 
     def redirect_header(uri)
-      [301, {'Location' => uri.to_s, 'Content-Type' => 'text/html'}, []]
+      [301, { 'Location' => uri.to_s, 'Content-Type' => 'text/html' }, []]
     end
   end
-
 end
