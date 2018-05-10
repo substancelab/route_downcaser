@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Fixed bug where redirecting multibyte URLs would result in a `Rack::Lint::LintError` (Issue #29).
+
 * Don't lose parts of the querystring when it contains multiple questionmarks. Thanks, {rmeritz}[https://github.com/rmeritz].
 
 ## 1.2.1
