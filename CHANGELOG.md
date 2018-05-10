@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* Dropped support for Rails 4. Going forward we're targetting Rails 5.x (and 6.x). Rails 5 deprecates a few configuration options that we need access to. If you still need support for Rails 4.x, version 1.2.2 of route_downcaser should work just fine.
+
 ## 1.2.2
 
 * Fixed bug where redirecting multibyte URLs would result in a `Rack::Lint::LintError` (Issue #29).
