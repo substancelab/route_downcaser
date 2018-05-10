@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.2.2
 
 * Fixed bug where redirecting multibyte URLs would result in a `Rack::Lint::LintError` (Issue #29).
 
