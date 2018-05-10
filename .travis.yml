@@ -6,14 +6,17 @@ rvm:
   - 2.5.1
 
 env:
-  - "RAILS_VERSION=4.2.8"
-  - "RAILS_VERSION=5.0.3"
-  - "RAILS_VERSION=5.1.1"
+  - "RAILS_VERSION=4.2.10"
+  - "RAILS_VERSION=5.0.7"
+  - "RAILS_VERSION=5.1.6"
+  - "RAILS_VERSION=5.2.0"
 
 matrix:
   exclude:
     - rvm: 2.2.6
-      env: "RAILS_VERSION=5.1.1"
+      env: "RAILS_VERSION=5.1.6"
+    - rvm: 2.2.6
+      env: "RAILS_VERSION=5.2.0"
 
 addons:
   code_climate:
