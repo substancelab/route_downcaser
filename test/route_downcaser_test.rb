@@ -161,5 +161,35 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
   end
 
+  class MultibyteRedirectTests < ActiveSupport::TestCase
+    setup do
+      @app = MyMockApp.new
+      RouteDowncaser.configuration do |config|
+        config.redirect = true
+        config.exclude_patterns = nil
+      end
+    end
 
+    test 'it redirects Multibyte REQUEST_URI' do
+      callenv = { 'REQUEST_URI' => 'ШУРШАЩАЯ ЗМЕЯ', 'REQUEST_METHOD' => 'GET' }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      result = RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      status, headers = *result
+
+      assert_equal 301, status
+      assert_equal 'шуршащая змея', headers['Location']
+      assert_instance_of String, headers['Location'], 'Headers must be strings'
+    end
+
+    test 'it redirects Multibyte PATH_INFO' do
+      callenv = { 'PATH_INFO' => 'ВЕЛОСИПЕД', 'REQUEST_METHOD' => 'GET' }
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      result = RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      status, headers = *result
+
+      assert_equal 301, status
+      assert_equal 'велосипед', headers['Location']
+      assert_instance_of String, headers['Location'], 'Headers must be strings'
+    end
+  end
 end

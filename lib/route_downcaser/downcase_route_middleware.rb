@@ -80,7 +80,7 @@ module RouteDowncaser
     end
 
     def redirect_header(uri)
-      [301, {'Location' => uri, 'Content-Type' => 'text/html'}, []]
+      [301, {'Location' => uri.to_s, 'Content-Type' => 'text/html'}, []]
     end
   end
 
