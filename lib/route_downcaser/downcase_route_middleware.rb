@@ -26,7 +26,7 @@ module RouteDowncaser
           return redirect_header(request_uri)
         end
 
-        if path_info.present? && path_info != env['PATH_INFO']
+        if path_info.present? && CGI.unescape(path_info) != CGI.unescape(env['PATH_INFO'])
           return redirect_header(path_info)
         end
       end
