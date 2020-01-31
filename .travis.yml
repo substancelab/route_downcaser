@@ -1,21 +1,20 @@
 language: ruby
 rvm:
-  - 2.2.10
-  - 2.3.7
-  - 2.4.4
-  - 2.5.1
+  - 2.4.9
+  - 2.5.7
+  - 2.6.5
+  - 2.7.0
 
 env:
   - "RAILS_VERSION=5.0.7"
-  - "RAILS_VERSION=5.1.6"
-  - "RAILS_VERSION=5.2.0"
+  - "RAILS_VERSION=5.1.7"
+  - "RAILS_VERSION=5.2.4"
+  - "RAILS_VERSION=6.0.2"
 
 matrix:
   exclude:
-    - rvm: 2.2.6
-      env: "RAILS_VERSION=5.1.6"
-    - rvm: 2.2.6
-      env: "RAILS_VERSION=5.2.0"
+    - rvm: 2.4.9
+      env: "RAILS_VERSION=6.0.2"
 
 addons:
   code_climate:
