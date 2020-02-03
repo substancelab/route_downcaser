@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Sinatra users no longer need to `require "active_support"` manually to prevent `NoMethodError`s.
+
 * Dropped support for Rails 4. Going forward we're targetting Rails 5.x (and 6.x). Rails 5 deprecates a few configuration options that we need access to. If you still need support for Rails 4.x, version 1.2.2 of route_downcaser should work just fine.
 
 * Dropped support for Ruby versions older than 2.4 (ie 2.2 and 2.3). They are EOL and should not be used in production.
