@@ -1,3 +1,6 @@
+require "active_support/core_ext/object/blank"
+require "active_support/core_ext/string/multibyte"
+
 module RouteDowncaser
   class DowncaseRouteMiddleware
     def initialize(app)
