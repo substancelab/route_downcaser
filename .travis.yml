@@ -6,10 +6,8 @@ rvm:
   - 3.0.0
 
 env:
-  - "RAILS_VERSION=5.0.7"
-  - "RAILS_VERSION=5.1.7"
-  - "RAILS_VERSION=5.2.4"
-  - "RAILS_VERSION=6.0.2"
+  - "RAILS_VERSION=5.2.4.4"
+  - "RAILS_VERSION=6.0.3.4"
 
 addons:
   code_climate:

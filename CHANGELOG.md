@@ -4,6 +4,8 @@
 
 * Dropped support for Rails 4. Going forward we're targetting Rails 5.x (and 6.x). Rails 5 deprecates a few configuration options that we need access to. If you still need support for Rails 4.x, version 1.2.2 of route_downcaser should work just fine.
 
+* Dropped support for Rails versions older than 5.2 (ie 5.0.x, 5.1.x). They are outside Rails official maintenance policy.
+
 * Dropped support for Ruby versions older than 2.5 (ie 2.2, 2.3, 2.4). They are EOL and should not be used in production.
 
 ## 1.2.3
