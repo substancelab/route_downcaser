@@ -10,6 +10,8 @@ This gem hooks into the Rack middleware of Rails. This way all paths are downcas
 
 This gem is tested with 5.2.x, 6.0.x, 6.1.x. It reportedly also works with Sinata, although I do not use Sinatra myself. Sinatra test-cases will be most welcome.
 
+It has previously worked - and I presume still works - in Rails 5.0.x and 5.1.x.
+
 If you want this functionality in a Rails 2.x-3.0 application, please refer to {this blog post}[http://gehling.dk/2010/02/how-to-make-rails-routing-case-insensitive]. If you need it for Rails 3.1.x or 4.x version 1.2.2 should serve you just fine.
 
 <b>Note:</b> from version 1.2.0, route_downcaser depends on ActiveSupport 3.2 or later. This was necessary to enable support for multibyte characters.
