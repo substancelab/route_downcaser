@@ -8,6 +8,7 @@ rvm:
 env:
   - "RAILS_VERSION=5.2.4.4"
   - "RAILS_VERSION=6.0.3.4"
+  - "RAILS_VERSION=6.1.0"
 
 addons:
   code_climate:
