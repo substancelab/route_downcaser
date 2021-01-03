@@ -12,7 +12,7 @@ rails = case rails_version
           '>= 4.2.0'
         else
           "~> #{rails_version}"
-end
+        end
 gem 'rails', rails
 ###############################################
 
