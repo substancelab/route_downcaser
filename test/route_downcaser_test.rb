@@ -3,6 +3,7 @@ require 'test_helper'
 class MyMockApp
   def call(env)
     raise 'Env nil' if env.blank?
+
     @env = env.clone
     @env
   end
