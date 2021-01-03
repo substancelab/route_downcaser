@@ -57,14 +57,6 @@ Naming/PredicateName:
     - 'spec/**/*'
     - 'lib/route_downcaser/downcase_route_middleware.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: nested, compact
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'lib/route_downcaser/configuration.rb'
-
 # Offense count: 2
 Style/ClassVars:
   Exclude:
