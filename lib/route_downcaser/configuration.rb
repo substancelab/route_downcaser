@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RouteDowncaser::Configuration
   def configuration
     yield self

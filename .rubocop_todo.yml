@@ -87,26 +87,6 @@ Style/ExpandPathArguments:
     - 'route_downcaser.gemspec'
     - 'test/test_helper.rb'
 
-# Offense count: 13
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, always_true, never
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - 'Gemfile'
-    - 'Rakefile'
-    - 'lib/route_downcaser.rb'
-    - 'lib/route_downcaser/configuration.rb'
-    - 'lib/route_downcaser/downcase_route_middleware.rb'
-    - 'lib/route_downcaser/railtie.rb'
-    - 'lib/route_downcaser/version.rb'
-    - 'lib/tasks/route_downcaser_tasks.rake'
-    - 'route_downcaser.gemspec'
-    - 'test.rb'
-    - 'test/integration/route_middleware_test.rb'
-    - 'test/route_downcaser_test.rb'
-    - 'test/test_helper.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Style/IfUnlessModifier:
