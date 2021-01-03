@@ -8,5 +8,5 @@ module RouteDowncaser
   extend RouteDowncaser::Configuration
 
   define_setting :redirect, false
-  define_setting :exclude_patterns, [/assets\//i]
+  define_setting :exclude_patterns, [%r{assets/}i]
 end
