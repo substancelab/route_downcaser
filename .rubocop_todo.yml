@@ -21,12 +21,6 @@ Lint/ConstantDefinitionInBlock:
     - 'test/integration/route_middleware_test.rb'
 
 # Offense count: 1
-# Cop supports --auto-correct.
-Lint/NonDeterministicRequireOrder:
-  Exclude:
-    - 'test/test_helper.rb'
-
-# Offense count: 1
 # Configuration parameters: IgnoredMethods, CountRepeatedAttributes.
 Metrics/AbcSize:
   Max: 24
