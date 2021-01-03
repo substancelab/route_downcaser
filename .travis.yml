@@ -10,6 +10,11 @@ env:
   - "RAILS_VERSION=6.0.3.4"
   - "RAILS_VERSION=6.1.0"
 
+matrix:
+  exclude:
+    - rvm: 3.0.0
+      env: "RAILS_VERSION=5.2.4.4"
+
 addons:
   code_climate:
     repo_token: 9b174f785a3f1ad8986730da28c2756320f0413067e7e06bad278280f47743fd
