@@ -82,13 +82,6 @@ Style/Documentation:
 
 # Offense count: 3
 # Cop supports --auto-correct.
-Style/ExpandPathArguments:
-  Exclude:
-    - 'route_downcaser.gemspec'
-    - 'test/test_helper.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
 Style/IfUnlessModifier:
   Exclude:
     - 'lib/route_downcaser/downcase_route_middleware.rb'
