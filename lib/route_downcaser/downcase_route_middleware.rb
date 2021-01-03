@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "active_support/core_ext/object/blank"
-require "active_support/core_ext/string/multibyte"
+require 'active_support/core_ext/object/blank'
+require 'active_support/core_ext/string/multibyte'
 
 module RouteDowncaser
   class DowncaseRouteMiddleware
