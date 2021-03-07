@@ -1,4 +1,6 @@
-$LOAD_PATH.push File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
 require 'route_downcaser/version'
@@ -12,7 +14,10 @@ Gem::Specification.new do |s|
   s.email       = ['carsten@sarum.dk']
   s.homepage    = 'https://github.com/carstengehling/route_downcaser'
   s.summary     = 'Makes routing in Rails case-insensitive'
-  s.description = "This gem hooks into the Rack middleware of Rails. This way all paths are downcased before dispatching to Rails' routing mechanism. Querystring parameters are not changed in any way."
+  s.description =
+    'This gem hooks into the Rack middleware of Rails. This way all paths are '\
+    "downcased before dispatching to Rails' routing mechanism. Querystring "\
+    'parameters are not changed in any way.'
 
   s.files = Dir['{lib}/**/*'] + ['MIT-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['test/**/*']

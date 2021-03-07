@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class MyMockApp
   def call(env)
     raise 'Env nil' if env.blank?
+
     @env = env.clone
     @env
   end
@@ -56,7 +59,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       @app = MyMockApp.new
       RouteDowncaser.configuration do |config|
         config.redirect = false
-        config.exclude_patterns = [/assets\//i, /fonts\//i]
+        config.exclude_patterns = [%r{assets/}i, %r{fonts/}i]
       end
     end
 
@@ -110,7 +113,7 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       @app = MyMockApp.new
       RouteDowncaser.configuration do |config|
         config.redirect = true
-        config.exclude_patterns = [/assets\//i, /fonts\//i]
+        config.exclude_patterns = [%r{assets/}i, %r{fonts/}i]
       end
     end
 

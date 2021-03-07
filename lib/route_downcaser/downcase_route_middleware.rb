@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+require 'active_support/core_ext/object/blank'
+require 'active_support/core_ext/string/multibyte'
+
 module RouteDowncaser
   class DowncaseRouteMiddleware
     def initialize(app)
@@ -22,13 +27,8 @@ module RouteDowncaser
       # If redirect configured, then return redirect request,
       # if either request_uri or path_info has changed
       if RouteDowncaser.redirect && env['REQUEST_METHOD'] == 'GET'
-        if request_uri.present? && request_uri != env['REQUEST_URI']
-          return redirect_header(request_uri)
-        end
-
-        if path_info.present? && CGI.unescape(path_info) != CGI.unescape(env['PATH_INFO'])
-          return redirect_header(path_info)
-        end
+        return redirect_header(request_uri) if request_uri.present? && request_uri != env['REQUEST_URI']
+        return redirect_header(path_info) if path_info.present? && CGI.unescape(path_info) != CGI.unescape(env['PATH_INFO'])
       end
 
       env['PATH_INFO'] = path_info.to_s if path_info
@@ -53,6 +53,7 @@ module RouteDowncaser
 
     def downcased_uri(uri)
       return nil unless uri.present?
+
       if has_querystring?(uri)
         "#{path(uri).mb_chars.downcase}?#{querystring(uri)}"
       else
