@@ -43,6 +43,24 @@ class RouteMiddlewareTest < ActionDispatch::IntegrationTest
     assert_equal('anybody out there?', @response.body)
   end
 
+  test 'Can downcase cyrillic paths correctly' do
+    RouteDowncaser.configuration do |config|
+      config.redirect = true
+    end
+    get "/#{URI.encode_www_form_component('ПИВО')}"
+    assert_equal 301, response.status
+    assert_equal '/пиво', URI.decode_www_form_component(response.location)
+  end
+
+  test 'Can downcase longer unicode paths correctly' do
+    RouteDowncaser.configuration do |config|
+      config.redirect = true
+    end
+    get "/#{URI.encode_www_form_component('ÃƒÂ¯Ã‚Â¿Ã‚Â½ÃƒÂ¯Ã‚Â¿Ã‚Â½')}"
+    assert_equal 301, response.status
+    assert_equal '/ãƒâ¯ã‚â¿ã‚â½ãƒâ¯ã‚â¿ã‚â½', URI.decode_www_form_component(response.location)
+  end
+
   test 'Input and output env are the same' do
     class App
       def call(env)
