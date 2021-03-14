@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'active_support/core_ext/object/blank'
-require 'active_support/core_ext/string/multibyte'
 
 module RouteDowncaser
   class DowncaseRouteMiddleware
@@ -56,10 +55,14 @@ module RouteDowncaser
       return nil unless uri.present?
 
       if has_querystring?(uri)
-        "#{path(uri).mb_chars.downcase}?#{querystring(uri)}"
+        "#{downcased_path(uri)}?#{querystring(uri)}"
       else
-        path(uri).mb_chars.downcase
+        downcased_path(uri)
       end
+    end
+
+    def downcased_path(uri)
+      path(uri).split("/").map{|segment| URI.encode_www_form_component(URI.decode_www_form_component(segment).downcase)}.join("/")
     end
 
     def path(uri)
