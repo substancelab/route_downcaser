@@ -21,7 +21,6 @@ gem 'rails', rails
 ###############################################
 # The following gems are also needed to test within the Rails env
 gem 'jquery-rails'
-gem 'therubyracer'
 gem 'turbolinks'
 ###############################################
 
