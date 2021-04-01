@@ -11,7 +11,7 @@ rails = case rails_version
         when 'master'
           { github: 'rails/rails' }
         when 'default'
-          '>= 4.2.0'
+          '>= 6.1.0'
         else
           "~> #{rails_version}"
         end
