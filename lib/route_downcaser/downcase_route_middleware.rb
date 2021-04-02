@@ -62,7 +62,11 @@ module RouteDowncaser
     end
 
     def downcased_path(uri)
-      path(uri).split("/").map{|segment| URI.encode_www_form_component(URI.decode_www_form_component(segment).downcase)}.join("/")
+      path(uri).split('/').map(&method(:downcase_path_segment)).join('/')
+    end
+
+    def downcase_path_segment(segment)
+      URI.encode_www_form_component(URI.decode_www_form_component(segment).downcase)
     end
 
     def path(uri)
