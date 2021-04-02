@@ -15,10 +15,6 @@ matrix:
     - rvm: 3.0.0
       env: "RAILS_VERSION=5.2.4.4"
 
-script:
-  - bundle exec rake build
-  - bundle exec rubocop
-
 addons:
   code_climate:
     repo_token: 9b174f785a3f1ad8986730da28c2756320f0413067e7e06bad278280f47743fd
