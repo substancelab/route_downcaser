@@ -8,10 +8,10 @@ gemspec
 # Enable testing of multiple rails versions
 rails_version = ENV['RAILS_VERSION'] || 'default'
 rails = case rails_version
-        when 'master'
-          { github: 'rails/rails' }
+        when 'main'
+          { github: 'rails/rails', branch: 'main' }
         when 'default'
-          '>= 4.2.0'
+          '>= 6.1.0'
         else
           "~> #{rails_version}"
         end
