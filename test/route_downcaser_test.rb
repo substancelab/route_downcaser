@@ -48,9 +48,9 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
 
     test 'the call environment should always be returned' do
-      callenv = { 'PATH_INFO' => 'HELLO/WORLD', 'REQUEST_METHOD' => 'GET' }
+      callenv = { 'PATH_INFO' => '/HELLO/WORLD', 'REQUEST_METHOD' => 'GET' }
       retval = RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal({ 'PATH_INFO' => 'hello/world', 'REQUEST_METHOD' => 'GET' }, retval)
+      assert_equal({ 'PATH_INFO' => '/hello/world', 'REQUEST_METHOD' => 'GET' }, retval)
     end
   end
 
@@ -64,9 +64,9 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
 
     test 'when PATH_INFO is found in exclude_patterns, do nothing' do
-      callenv = { 'PATH_INFO' => 'ASSETS/IMAges/SpaceCat.jpeg', 'REQUEST_METHOD' => 'GET' }
+      callenv = { 'PATH_INFO' => '/ASSETS/IMAges/SpaceCat.jpeg', 'REQUEST_METHOD' => 'GET' }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal('ASSETS/IMAges/SpaceCat.jpeg', @app.env['PATH_INFO'])
+      assert_equal('/ASSETS/IMAges/SpaceCat.jpeg', @app.env['PATH_INFO'])
     end
 
     test 'when REQUEST_URI is found in exclude_patterns, do nothing' do
@@ -100,9 +100,9 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
 
     test 'when redirect is true it redirects PATH_INFO' do
-      callenv = { 'PATH_INFO' => 'HELLO/WORLD', 'REQUEST_METHOD' => 'GET' }
+      callenv = { 'PATH_INFO' => '/HELLO/WORLD', 'REQUEST_METHOD' => 'GET' }
       assert_equal(
-        [301, { 'Location' => 'hello/world', 'Content-Type' => 'text/html' }, []],
+        [301, { 'Location' => '/hello/world', 'Content-Type' => 'text/html' }, []],
         RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       )
     end
@@ -124,9 +124,9 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
 
     test 'when redirect is true it does not redirect, if PATH_INFO match exclude patterns' do
-      callenv = { 'PATH_INFO' => 'fonts/Icons.woff', 'REQUEST_METHOD' => 'GET' }
+      callenv = { 'PATH_INFO' => '/fonts/Icons.woff', 'REQUEST_METHOD' => 'GET' }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal('fonts/Icons.woff', @app.env['PATH_INFO'])
+      assert_equal('/fonts/Icons.woff', @app.env['PATH_INFO'])
     end
   end
 
@@ -146,9 +146,9 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
 
     test 'Multibyte PATH_INFO is downcased' do
-      callenv = { 'PATH_INFO' => 'ВЕЛОСИПЕД', 'REQUEST_METHOD' => 'GET' }
+      callenv = { 'PATH_INFO' => '/ВЕЛОСИПЕД', 'REQUEST_METHOD' => 'GET' }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal('велосипед', @app.env['PATH_INFO'])
+      assert_equal('/велосипед', @app.env['PATH_INFO'])
     end
 
     test 'Additional multibyte downcase tests' do
@@ -179,13 +179,13 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
 
     test 'it redirects Multibyte PATH_INFO' do
-      callenv = { 'PATH_INFO' => 'ВЕЛОСИПЕД', 'REQUEST_METHOD' => 'GET' }
+      callenv = { 'PATH_INFO' => '/ВЕЛОСИПЕД', 'REQUEST_METHOD' => 'GET' }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       result = RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       status, headers = *result
 
       assert_equal 301, status
-      assert_equal 'велосипед', headers['Location']
+      assert_equal '/велосипед', headers['Location']
       assert_instance_of String, headers['Location'], 'Headers must be strings'
     end
   end
