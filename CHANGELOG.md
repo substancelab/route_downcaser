@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Added support for URLs with non-ASCII characters in them. In other words, your application shouldn't get stuck in a an infinite redirect loop when a request contains non-ASCII characters that can be downcased.
+
 * Added Ruby 3.0 to the test matrix.
 
 * Added Rails 6.1.x to the build matrix.
