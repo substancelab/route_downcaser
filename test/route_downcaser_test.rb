@@ -140,21 +140,15 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
 
     test 'Multibyte REQUEST_URI path-part is downcased' do
-      callenv = { 'REQUEST_URI' => 'ШУРШАЩАЯ ЗМЕЯ', 'REQUEST_METHOD' => 'GET' }
+      callenv = { 'REQUEST_URI' => URI.encode_www_form_component('ШУРШАЩАЯ ЗМЕЯ'), 'REQUEST_METHOD' => 'GET' }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal('шуршащая змея', @app.env['REQUEST_URI'])
+      assert_equal(URI.encode_www_form_component('шуршащая змея'), @app.env['REQUEST_URI'])
     end
 
     test 'Multibyte PATH_INFO is downcased' do
-      callenv = { 'PATH_INFO' => '/ВЕЛОСИПЕД', 'REQUEST_METHOD' => 'GET' }
+      callenv = { 'PATH_INFO' => "/" + URI.encode_www_form_component('ВЕЛОСИПЕД'), 'REQUEST_METHOD' => 'GET' }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal('/велосипед', @app.env['PATH_INFO'])
-    end
-
-    test 'Additional multibyte downcase tests' do
-      callenv = { 'REQUEST_URI' => 'ПИВО', 'REQUEST_METHOD' => 'GET' }
-      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
-      assert_equal('пиво', @app.env['REQUEST_URI'])
+      assert_equal("/" + URI.encode_www_form_component('велосипед'), @app.env['PATH_INFO'])
     end
   end
 
@@ -168,24 +162,24 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
 
     test 'it redirects Multibyte REQUEST_URI' do
-      callenv = { 'REQUEST_URI' => 'ШУРШАЩАЯ ЗМЕЯ', 'REQUEST_METHOD' => 'GET' }
+      callenv = { 'REQUEST_URI' => URI.encode_www_form_component('ШУРШАЩАЯ ЗМЕЯ'), 'REQUEST_METHOD' => 'GET' }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       result = RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       status, headers = *result
 
       assert_equal 301, status
-      assert_equal 'шуршащая змея', headers['Location']
+      assert_equal URI.encode_www_form_component('шуршащая змея'), headers['Location']
       assert_instance_of String, headers['Location'], 'Headers must be strings'
     end
 
     test 'it redirects Multibyte PATH_INFO' do
-      callenv = { 'PATH_INFO' => '/ВЕЛОСИПЕД', 'REQUEST_METHOD' => 'GET' }
+      callenv = { 'PATH_INFO' => "/" + URI.encode_www_form_component('ВЕЛОСИПЕД'), 'REQUEST_METHOD' => 'GET' }
       RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       result = RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
       status, headers = *result
 
       assert_equal 301, status
-      assert_equal '/велосипед', headers['Location']
+      assert_equal "/" + URI.encode_www_form_component('велосипед'), headers['Location']
       assert_instance_of String, headers['Location'], 'Headers must be strings'
     end
   end
