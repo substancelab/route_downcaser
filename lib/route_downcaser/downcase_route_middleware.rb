@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_support/core_ext/object/blank'
+require "active_support/core_ext/object/blank"
 
 module RouteDowncaser
   class DowncaseRouteMiddleware
@@ -13,8 +13,8 @@ module RouteDowncaser
     end
 
     def _call(env)
-      request_uri = env['REQUEST_URI']
-      path_info = env['PATH_INFO']
+      request_uri = env["REQUEST_URI"]
+      path_info = env["PATH_INFO"]
 
       # Don't touch anything, if uri/path is part of exclude_patterns
       return @app.call(env) if excluded?([request_uri, path_info])
@@ -25,14 +25,14 @@ module RouteDowncaser
 
       # If redirect configured, then return redirect request,
       # if either request_uri or path_info has changed
-      if RouteDowncaser.redirect && env['REQUEST_METHOD'] == 'GET'
-        return redirect_header(request_uri) if request_uri.present? && request_uri != env['REQUEST_URI']
+      if RouteDowncaser.redirect && env["REQUEST_METHOD"] == "GET"
+        return redirect_header(request_uri) if request_uri.present? && request_uri != env["REQUEST_URI"]
 
-        return redirect_header(path_info) if path_info.present? && path_info != env['PATH_INFO']
+        return redirect_header(path_info) if path_info.present? && path_info != env["PATH_INFO"]
       end
 
-      env['PATH_INFO'] = path_info.to_s if path_info
-      env['REQUEST_URI'] = request_uri.to_s if request_uri
+      env["PATH_INFO"] = path_info.to_s if path_info
+      env["REQUEST_URI"] = request_uri.to_s if request_uri
 
       # Default just move to next chain in Rack callstack
       # calling with downcased uri if needed
@@ -62,7 +62,7 @@ module RouteDowncaser
     end
 
     def downcased_path(uri)
-      path(uri).split('/').map(&method(:downcase_path_segment)).join('/')
+      path(uri).split("/").map(&method(:downcase_path_segment)).join("/")
     end
 
     def downcase_path_segment(segment)
@@ -82,11 +82,11 @@ module RouteDowncaser
     end
 
     def uri_items(uri)
-      uri.split('?', 2)
+      uri.split("?", 2)
     end
 
     def redirect_header(uri)
-      [301, { 'Location' => uri.to_s, 'Content-Type' => 'text/html' }, []]
+      [301, {"Location" => uri.to_s, "Content-Type" => "text/html"}, []]
     end
   end
 end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'route_downcaser/downcase_route_middleware'
-require 'route_downcaser/railtie' if defined? Rails
-require 'route_downcaser/configuration'
+require "route_downcaser/downcase_route_middleware"
+require "route_downcaser/railtie" if defined? Rails
+require "route_downcaser/configuration"
 
 module RouteDowncaser
   extend RouteDowncaser::Configuration
