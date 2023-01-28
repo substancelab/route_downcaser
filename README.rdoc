@@ -8,7 +8,7 @@ This gem hooks into the Rack middleware of Rails. This way all paths are downcas
 
 == Requirements
 
-This gem is tested with 5.2.x, 6.0.x, 6.1.x. It reportedly also works with Sinata, although I do not use Sinatra myself. Sinatra test-cases will be most welcome.
+This gem is tested with 5.2.x, 6.0.x, 6.1.x. It reportedly also works with Sinatra, although I do not use Sinatra myself. Sinatra test-cases will be most welcome.
 
 It has previously worked - and I presume still works - in Rails 5.0.x and 5.1.x.
 
