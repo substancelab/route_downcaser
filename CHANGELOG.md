@@ -4,15 +4,15 @@
 
 * Added support for URLs with non-ASCII characters in them. In other words, your application shouldn't get stuck in a an infinite redirect loop when a request contains non-ASCII characters that can be downcased.
 
-* Added Ruby 3.0 to the test matrix.
+* Added Ruby 3.0, 3.1, 3.2 to the test matrix.
 
-* Added Rails 6.1.x to the build matrix.
+* Added Rails 6.1.x and 7.0.x to the build matrix.
 
 * Dropped support for Rails 4. Going forward we're targetting Rails 5.x (and 6.x). Rails 5 deprecates a few configuration options that we need access to. If you still need support for Rails 4.x, version 1.2.2 of route_downcaser should work just fine.
 
 * Dropped support for Rails versions older than 5.2 (ie 5.0.x, 5.1.x). They are outside Rails official maintenance policy.
 
-* Dropped support for Ruby versions older than 2.5 (ie 2.2, 2.3, 2.4). They are EOL and should not be used in production.
+* Dropped support for Ruby versions older than 2.7 (ie 2.2, 2.3, 2.4, 2.5, 2.6). They are EOL and should not be used in production. We are keeping support for 2.7 around a bit yet, as to have support for at least one 2.x version.
 
 ## 1.2.3
 
