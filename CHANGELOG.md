@@ -12,7 +12,7 @@
 
 * Dropped support for Rails versions older than 5.2 (ie 5.0.x, 5.1.x). They are outside Rails official maintenance policy.
 
-* Dropped support for Ruby versions older than 2.5 (ie 2.2, 2.3, 2.4). They are EOL and should not be used in production.
+* Dropped support for Ruby versions older than 2.7 (ie 2.2, 2.3, 2.4, 2.5, 2.6). They are EOL and should not be used in production. We are keeping support for 2.7 around a bit yet, as to have support for at least one 2.x version.
 
 ## 1.2.3
 
