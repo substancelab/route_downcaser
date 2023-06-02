@@ -15,12 +15,11 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/carstengehling/route_downcaser"
   s.summary = "Makes routing in Rails case-insensitive"
   s.description =
-    "This gem hooks into the Rack middleware of Rails. This way all paths are "\
-    "downcased before dispatching to Rails' routing mechanism. Querystring "\
+    "This gem hooks into the Rack middleware of Rails. This way all paths are " \
+    "downcased before dispatching to Rails' routing mechanism. Querystring " \
     "parameters are not changed in any way."
 
   s.files = Dir["{lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
   s.add_runtime_dependency "activesupport", ">= 3.2"
   s.add_development_dependency "standard"
 end
