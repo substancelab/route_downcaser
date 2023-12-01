@@ -13,26 +13,21 @@ module RouteDowncaser
     end
 
     def _call(env)
-      request_uri = env["REQUEST_URI"]
       path_info = env["PATH_INFO"]
 
-      # Don't touch anything, if uri/path is part of exclude_patterns
-      return @app.call(env) if excluded?([request_uri, path_info])
+      # Don't touch anything, if path is part of exclude_patterns
+      return @app.call(env) if excluded?([path_info])
 
-      # Downcase request_uri and/or path_info if applicable
-      request_uri = downcased_uri(request_uri)
+      # Downcase path_info if applicable
       path_info = downcased_uri(path_info)
 
-      # If redirect configured, then return redirect request,
-      # if either request_uri or path_info has changed
+      # If redirect configured, then return redirect request, if either
+      # path_info has changed
       if RouteDowncaser.redirect && env["REQUEST_METHOD"] == "GET"
-        return redirect_header(request_uri) if request_uri.present? && request_uri != env["REQUEST_URI"]
-
         return redirect_header(path_info) if path_info.present? && path_info != env["PATH_INFO"]
       end
 
       env["PATH_INFO"] = path_info.to_s if path_info
-      env["REQUEST_URI"] = request_uri.to_s if request_uri
 
       # Default just move to next chain in Rack callstack
       # calling with downcased uri if needed
