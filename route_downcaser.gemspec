@@ -10,9 +10,9 @@ Gem::Specification.new do |s|
   s.name = "route_downcaser"
   s.version = RouteDowncaser::VERSION
   s.licenses = ["MIT"]
-  s.authors = ["Carsten Gehling"]
-  s.email = ["carsten@sarum.dk"]
-  s.homepage = "https://github.com/carstengehling/route_downcaser"
+  s.authors = ["Carsten Gehling", "Jakob Skjerning"]
+  s.email = ["jakob@substancelab.com"]
+  s.homepage = "https://github.com/substancelab/route_downcaser"
   s.summary = "Makes routing in Rails case-insensitive"
   s.description =
     "This gem hooks into the Rack middleware of Rails. This way all paths are " \
