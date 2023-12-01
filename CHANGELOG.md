@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.0
+
 * [BREAKING] We now rely only on rack-spec-compliant values to investigate the URLs. This should improve compatibility with different application servers. In particular, this means we now ignore the `REQUEST_URI` value and rely solely on `PATH_INFO`. If your application relies on `REQUEST_URI` being downcased, this could be a breaking change.
 
 * Added support for URLs with non-ASCII characters in them. In other words, your application shouldn't get stuck in a an infinite redirect loop when a request contains non-ASCII characters that can be downcased.
