@@ -1,6 +1,0 @@
-inherit_from: .rubocop_todo.yml
-
-AllCops:
-  Exclude:
-    - 'test/rails610/**/*'
-  NewCops: enable
