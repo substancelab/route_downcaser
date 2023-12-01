@@ -8,7 +8,7 @@
 
 * Added Ruby 3.0, 3.1, 3.2 to the test matrix.
 
-* Added Rails 6.1.x and 7.0.x to the build matrix.
+* Added Rails 6.1.x, 7.0.x, 7.1.x to the build matrix.
 
 * Dropped support for Rails 4. Going forward we're targetting Rails 5.x (and 6.x). Rails 5 deprecates a few configuration options that we need access to. If you still need support for Rails 4.x, version 1.2.2 of route_downcaser should work just fine.
 
