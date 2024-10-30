@@ -122,4 +122,27 @@ class RouteDowncaserTest < ActiveSupport::TestCase
       assert_instance_of String, headers["Location"], "Headers must be strings"
     end
   end
+
+  class SpecialSymbolsInPathTests < ActiveSupport::TestCase
+    setup do
+      @app = MyMockApp.new
+      RouteDowncaser.configuration do |config|
+        config.redirect = true
+        config.exclude_patterns = nil
+      end
+    end
+
+    test "path with tildes" do
+      callenv = {"PATH_INFO" => "/~test~~test~", "REQUEST_METHOD" => "GET"}
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("/~test~~test~", @app.env["PATH_INFO"])
+    end
+
+    test "path with escape tilde" do
+      callenv = {"PATH_INFO" => "/~test%7Etest~~", "REQUEST_METHOD" => "GET"}
+      status, headers, _ = *RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal 301, status
+      assert_equal("/~test~test~~", headers["Location"])
+    end
+  end
 end

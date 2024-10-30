@@ -58,6 +58,15 @@ class RouteMiddlewareTest < ActionDispatch::IntegrationTest
     assert_equal "/пиво", URI.decode_www_form_component(response.location)
   end
 
+  test "Can downcase path with tilde correctly" do
+    RouteDowncaser.configuration do |config|
+      config.redirect = true
+    end
+    get "/~Test~~test"
+    assert_equal 301, response.status
+    assert_equal "/~test~~test", URI.decode_www_form_component(response.location)
+  end
+
   test "Can downcase longer unicode paths correctly" do
     RouteDowncaser.configuration do |config|
       config.redirect = true

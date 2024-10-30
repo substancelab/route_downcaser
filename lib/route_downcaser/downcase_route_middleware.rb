@@ -20,6 +20,7 @@ module RouteDowncaser
 
       # Downcase path_info if applicable
       path_info = downcased_uri(path_info)
+      path_info = path_info.gsub('%7E', '~') if path_info
 
       # If redirect configured, then return redirect request, if either
       # path_info has changed
