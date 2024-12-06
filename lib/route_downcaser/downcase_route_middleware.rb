@@ -62,7 +62,7 @@ module RouteDowncaser
     end
 
     def downcase_path_segment(segment)
-      URI.encode_www_form_component(URI.decode_www_form_component(segment).downcase)
+      uri_encode(uri_decode(segment).downcase)
     end
 
     def path(uri)
@@ -75,6 +75,14 @@ module RouteDowncaser
 
     def has_querystring?(uri)
       uri_items(uri).length > 1
+    end
+
+    def uri_decode(uri_segment)
+      URI.decode_www_form_component(uri_segment)
+    end
+
+    def uri_encode(uri_segment)
+      URI.encode_www_form_component(uri_segment)
     end
 
     def uri_items(uri)
