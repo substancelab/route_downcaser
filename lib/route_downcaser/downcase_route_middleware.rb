@@ -57,9 +57,9 @@ module RouteDowncaser
     def downcased_uri(uri)
       return nil unless uri.present?
       if has_querystring?(uri)
-        "#{path(uri).mb_chars.downcase}?#{querystring(uri)}"
+        "#{path(uri).downcase}?#{querystring(uri)}"
       else
-        path(uri).mb_chars.downcase
+        path(uri).downcase
       end
     end
 
