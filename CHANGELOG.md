@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 2.1.0
 
 * We no longer change tilde characters (`~`) in URLs to their percentage-encoding *(`%7E`) as part of the downcasing process. Thanks {Yegorov}[https://github.com/Yegorov]!
 
