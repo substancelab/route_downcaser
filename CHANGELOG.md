@@ -6,6 +6,8 @@
 
 * [BREAKING] Dropped support for Rails versions before 8.0. As of August 9, 2026 Rails 7.2 is EOL.
 
+* Added Ruby 4.0 support (no changes).
+
 ## 2.1.0
 
 * We no longer change tilde characters (`~`) in URLs to their percentage-encoding *(`%7E`) as part of the downcasing process. Thanks {Yegorov}[https://github.com/Yegorov]!

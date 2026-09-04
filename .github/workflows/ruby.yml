@@ -22,8 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        rails-version: ['8.0.0', '8.1.0','main']
-        ruby-version: ['3.2', '3.3', '3.4']
+        rails-version: ['8.0.0', '8.1.0', 'main']
+        ruby-version: ['3.2', '3.3', '3.4', '4.0']
         exclude:
           - rails-version: 'main'
             ruby-version: '3.2'
