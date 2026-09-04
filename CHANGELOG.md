@@ -4,7 +4,7 @@
 
 * We no longer change tilde characters (`~`) in URLs to their percentage-encoding *(`%7E`) as part of the downcasing process. Thanks {Yegorov}[https://github.com/Yegorov]!
 
-* Added Rails 8.0 support (no changes).
+* Added Rails 8.0 and 8.1 support (no changes).
 
 * Added Ruby 3.4 support (no changes).
 
