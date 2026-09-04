@@ -4,6 +4,11 @@ source "http://rubygems.org"
 
 gemspec
 
+gem "base64"
+gem "bigdecimal"
+gem "drb"
+gem "mutex_m"
+
 ###############################################
 # Enable testing of multiple rails versions
 rails_version = ENV["RAILS_VERSION"] || "default"
