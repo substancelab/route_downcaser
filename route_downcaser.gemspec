@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
     "parameters are not changed in any way."
 
   s.files = Dir["{lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.add_runtime_dependency "activesupport", ">= 3.2"
+  s.add_runtime_dependency "activesupport", ">= 8.0"
   s.add_development_dependency "standard"
 end
