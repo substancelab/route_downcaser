@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/object/blank"
+require "erb"
 
 module RouteDowncaser
   class DowncaseRouteMiddleware
@@ -20,7 +21,6 @@ module RouteDowncaser
 
       # Downcase path_info if applicable
       path_info = downcased_uri(path_info)
-      path_info = path_info.gsub("%7E", "~") if path_info
 
       # If redirect configured, then return redirect request, if either
       # path_info has changed
@@ -82,7 +82,7 @@ module RouteDowncaser
     end
 
     def uri_encode(uri_segment)
-      URI.encode_www_form_component(uri_segment)
+      ERB::Util.url_encode(uri_segment)
     end
 
     def uri_items(uri)
