@@ -4,6 +4,13 @@ source "http://rubygems.org"
 
 gemspec
 
+if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.3.0")
+  gem "base64"
+  gem "bigdecimal"
+  gem "drb"
+  gem "mutex_m"
+end
+
 ###############################################
 # Enable testing of multiple rails versions
 rails_version = ENV["RAILS_VERSION"] || "default"
