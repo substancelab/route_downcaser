@@ -6,6 +6,8 @@
 
 * Added Rails 8.0 support (no changes).
 
+* Added Ruby 3.4 support (no changes).
+
 ## 2.0.0
 
 * [BREAKING] We now rely only on rack-spec-compliant values to investigate the URLs. This should improve compatibility with different application servers. In particular, this means we now ignore the `REQUEST_URI` value and rely solely on `PATH_INFO`. If your application relies on `REQUEST_URI` being downcased, this could be a breaking change.
