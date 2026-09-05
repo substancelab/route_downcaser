@@ -21,5 +21,5 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.add_runtime_dependency "activesupport", ">= 8.0"
-  s.add_development_dependency "standard"
+  s.add_development_dependency "standard", ">= 1.53.0"
 end
