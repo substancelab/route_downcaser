@@ -25,12 +25,14 @@ end
 Bundler::GemHelper.install_tasks
 
 require "rake/testtask"
-
 Rake::TestTask.new(:test) do |t|
   t.libs << "lib"
   t.libs << "test"
   t.pattern = "test/**/*_test.rb"
   t.verbose = false
 end
+
+require "standard/rake"
+task lint: :standard
 
 task default: :test
