@@ -35,4 +35,4 @@ end
 require "standard/rake"
 task lint: :standard
 
-task default: :test
+task default: [:test, :lint]
