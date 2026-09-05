@@ -25,13 +25,8 @@ end
 gem "rails", rails
 ###############################################
 
-###############################################
-# The following gems are also needed to test within the Rails env
-gem "jquery-rails"
-gem "turbolinks"
-###############################################
-
 group :test do
   gem "codeclimate-test-reporter", "~> 1.0.0"
+  gem "propshaft"
   gem "simplecov"
 end

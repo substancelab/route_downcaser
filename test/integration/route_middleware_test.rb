@@ -24,9 +24,10 @@ class RouteMiddlewareTest < ActionDispatch::IntegrationTest
       config.redirect = false
     end
 
-    get "/assets/application.js"
+    path_to_application_css = Rails.application.assets.resolver.resolve("application.css")
+    get path_to_application_css
     assert_response :success
-    assert(@response.body.include?("fancy manifest file"))
+    assert(@response.body.include?("background: green;"))
   end
 
   test "Redirect instead of rewrite" do

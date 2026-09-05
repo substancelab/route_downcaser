@@ -7,7 +7,7 @@ SimpleCov.start
 ENV["RAILS_ENV"] = "test"
 
 # require File.expand_path("../dummy/config/environment.rb",  __FILE__)
-require File.expand_path("rails610/config/environment.rb", __dir__)
+require File.expand_path("rails813/config/environment.rb", __dir__)
 require "rails/test_help"
 
 Rails.backtrace_cleaner.remove_silencers!
