@@ -86,6 +86,59 @@ class RouteDowncaserTest < ActiveSupport::TestCase
     end
   end
 
+  class RedirectTrueExcludePatternsPreserveTrailingSlashtests < ActiveSupport::TestCase
+    setup do
+      @app = MyMockApp.new
+      RouteDowncaser.configuration do |config|
+        config.redirect = true
+        config.preserve_trailing_slash = true
+        config.exclude_patterns = [%r{assets/}i, %r{fonts/}i]
+      end
+    end
+
+    test "when redirect is true it does not redirect, if PATH_INFO match exclude patterns. It keeps the trailing slash with preserve trailing slash" do
+      callenv = {"PATH_INFO" => "/fonts/Icons.woff/", "REQUEST_METHOD" => "GET"}
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("/fonts/Icons.woff/", @app.env["PATH_INFO"])
+    end
+  end
+
+  class RedirectTruePreserveTrailingSlashTests < ActiveSupport::TestCase
+    setup do
+      @app = MyMockApp.new
+      RouteDowncaser.configuration do |config|
+        config.redirect = true
+        config.preserve_trailing_slash = true
+        config.exclude_patterns = nil
+      end
+    end
+
+    test "when redirect and preserve_trailing_slash is true it redirects PATH_INFO and preserves trailing slash" do
+      callenv = {"PATH_INFO" => "/HELLO/WORLD/", "REQUEST_METHOD" => "GET"}
+      assert_equal(
+        [301, {"Location" => "/hello/world/", "Content-Type" => "text/html"}, []],
+        RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      )
+    end
+  end
+
+  class PreserveTrailingSlashTrueTests < ActiveSupport::TestCase
+    setup do
+      @app = MyMockApp.new
+      RouteDowncaser.configuration do |config|
+        config.redirect = false
+        config.preserve_trailing_slash = true
+        config.exclude_patterns = nil
+      end
+    end
+
+    test "when preserve_trailing_slash is true it downcases and preserves trailing slash" do
+      callenv = {"PATH_INFO" => "HELLO/WORLD/", "REQUEST_METHOD" => "GET"}
+      RouteDowncaser::DowncaseRouteMiddleware.new(@app).call(callenv)
+      assert_equal("hello/world/", @app.env["PATH_INFO"])
+    end
+  end
+
   class MultibyteTests < ActiveSupport::TestCase
     setup do
       @app = MyMockApp.new

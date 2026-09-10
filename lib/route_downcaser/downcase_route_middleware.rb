@@ -58,7 +58,9 @@ module RouteDowncaser
     end
 
     def downcased_path(uri)
-      path(uri).split("/").map(&method(:downcase_path_segment)).join("/")
+      dc_path = path(uri).split("/").map(&method(:downcase_path_segment)).join("/")
+      dc_path += "/" if RouteDowncaser.preserve_trailing_slash && uri.last == "/"
+      dc_path
     end
 
     def downcase_path_segment(segment)
