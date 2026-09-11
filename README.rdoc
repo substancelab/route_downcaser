@@ -74,6 +74,11 @@ Configuration options can be set using an initializer in your application like s
 
 With this configuration option set to `true`, the middleware will 301 redirect all routes to their downcased version. Example: `http://localhost:3000/Foo` will redirect to `http://localhost:3000/foo`.
 
+=== preserve_trailing_slash
+
+With this configuration option set to `true`, the middleware will preserve the trailing slash if there is one. Example: `http://localhost:3000/Foo/` will downcase to `http://localhost:3000/foo/`. This
+option can be used with `redirect` so that `http://localhost:3000/Foo/` will also redirect to `http://localhost:3000/foo/`.
+
 === exclude_patterns
 
 Array of regular expressions. If the requested path matches one of these expressions, RouteDowncaser will not change anything.
